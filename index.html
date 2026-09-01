@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Room — English for Nail Technology</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --cream:#FBF8F3;
+  --cream-deep:#F3ECE2;
+  --surface:#FFFFFF;
+  --ink:#2E2A25;
+  --ink-soft:#6B6459;
+  --blush:#F6E4E7;
+  --blush-deep:#EED1D6;
+  --magenta:#B23A64;
+  --magenta-deep:#8E2E50;
+  --magenta-pale:#F7E4EC;
+  --sage:#7E9A78;
+  --sage-deep:#516B4C;
+  --sage-pale:#E8EFE5;
+  --gray:#9C958A;
+  --line:#E8E0D4;
+  --shadow-sm:0 2px 10px rgba(60,48,25,.06);
+  --shadow-md:0 10px 30px rgba(60,48,25,.10);
+  --shadow-lg:0 20px 50px rgba(60,48,25,.14);
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --font-display:'Fraunces', serif;
+  --font-body:'Work Sans', sans-serif;
+  --ease:cubic-bezier(.22,.9,.32,1.1);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; font-family:var(--font-body); color:var(--ink); background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse 800px 500px at 6% 0%, var(--blush) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, var(--sage-pale) 0%, transparent 55%);
+  background-attachment:fixed; background-repeat:no-repeat;
+}
+a{color:inherit; text-decoration:none;}
+button{font-family:var(--font-body);}
+::selection{background:var(--magenta-pale); color:var(--magenta-deep);}
+img{max-width:100%;}
+
+/* TOPBAR */
+.topbar{
+  position:sticky; top:0; z-index:60; background:color-mix(in srgb, var(--cream) 90%, transparent);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line);
+  padding:14px 24px; display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:10px; margin-right:auto;}
+.brand .mark{width:24px;height:24px;border-radius:50%; background:conic-gradient(var(--magenta) 0 260deg, transparent 260deg 360deg); box-shadow:0 0 0 3px var(--blush);}
+.brand .name{font-family:var(--font-display); font-weight:600; font-size:17.5px;}
+.brand .tag{font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:600;}
+.navlinks{display:flex; gap:22px; flex-wrap:wrap;}
+.navlinks a{font-size:13px; font-weight:600; color:var(--ink-soft); padding:6px 2px; border-bottom:2px solid transparent; transition:.2s var(--ease);}
+.navlinks a:hover{color:var(--magenta-deep); border-color:var(--magenta);}
+
+main{max-width:1040px; margin:0 auto; padding:8px 24px 90px;}
+
+/* HERO */
+.hero{
+  position:relative; border-radius:var(--radius-lg); padding:56px 40px; margin:24px 0 40px; overflow:hidden;
+  background:linear-gradient(120deg, var(--blush) 0%, var(--cream) 55%, var(--sage-pale) 100%);
+  border:1px solid var(--line); text-align:center;
+}
+.hero::before{content:''; position:absolute; top:-70px; right:-70px; width:240px;height:240px; border-radius:50%; background:radial-gradient(circle, var(--magenta) 0%, transparent 70%); opacity:.13;}
+.hero::after{content:''; position:absolute; bottom:-70px; left:-70px; width:220px;height:220px; border-radius:50%; background:radial-gradient(circle, var(--sage) 0%, transparent 70%); opacity:.15;}
+.hero .eyebrow{font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--magenta-deep); font-weight:700; margin-bottom:14px;}
+.hero h1{font-family:var(--font-display); font-weight:600; font-size:44px; line-height:1.1; margin:0 0 8px;}
+.hero h1 em{font-style:italic; font-weight:400; color:var(--sage-deep);}
+.hero h2{font-family:var(--font-display); font-weight:400; font-style:italic; font-size:19px; color:var(--ink-soft); margin:0 0 18px;}
+.hero p{font-size:14.5px; color:var(--ink-soft); max-width:480px; margin:0 auto 26px; line-height:1.7;}
+
+.btn{border:none; border-radius:999px; padding:13px 28px; font-weight:700; font-size:13.5px; cursor:pointer; display:inline-flex; align-items:center; gap:8px;}
+.btn.primary{background:var(--ink); color:var(--cream);}
+.btn.primary:hover{background:var(--magenta-deep);}
+.btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink);}
+.btn.ghost:hover{border-color:var(--magenta); color:var(--magenta-deep);}
+.btn.small{padding:9px 18px; font-size:12px;}
+
+/* SECTION HEADERS */
+.sectionhead{display:flex; align-items:baseline; justify-content:space-between; gap:14px; margin:52px 0 20px; flex-wrap:wrap;}
+.sectionhead .lbl{}
+.sectionhead h2{font-family:var(--font-display); font-weight:600; font-size:25px; margin:0 0 4px;}
+.sectionhead p{font-size:13px; color:var(--ink-soft); margin:0; max-width:520px;}
+
+/* CARD GRID */
+.grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:18px;}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:22px; box-shadow:var(--shadow-sm); transition:.25s var(--ease);}
+.card:hover{box-shadow:var(--shadow-md); transform:translateY(-2px);}
+
+/* LESSON / TOPIC CARDS */
+.topiccard{display:flex; flex-direction:column; gap:12px;}
+.topiccard .topictag{font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--magenta-deep); font-weight:700;}
+.topiccard h3{font-family:var(--font-display); font-weight:600; font-size:19px; margin:0;}
+.topiccard .meta{font-size:12px; color:var(--ink-soft); display:flex; align-items:center; gap:6px;}
+.topiccard .desc{font-size:13px; color:var(--ink-soft); line-height:1.6; flex:1;}
+.progressbar{height:6px; border-radius:99px; background:var(--cream-deep); overflow:hidden;}
+.progressbar > span{display:block; height:100%; background:var(--sage); border-radius:99px;}
+.topiccard .rowend{display:flex; align-items:center; justify-content:space-between; margin-top:4px;}
+
+.comingsoon{border:1.5px dashed var(--line); background:transparent; box-shadow:none; display:flex; align-items:center; justify-content:center; text-align:center; min-height:190px; color:var(--gray); font-size:13px;}
+.comingsoon .plus{font-family:var(--font-display); font-size:30px; color:var(--gray); display:block; margin-bottom:6px;}
+
+/* VOCAB SECTION */
+.vocabpanel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:26px; box-shadow:var(--shadow-sm);}
+.vocabtop{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+.vocabstats{display:flex; gap:10px; flex-wrap:wrap;}
+.statpill{background:var(--magenta-pale); color:var(--magenta-deep); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:700;}
+.statpill.sage{background:var(--sage-pale); color:var(--sage-deep);}
+.vocabform{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px;}
+.vocabform input, .vocabform textarea{border:1px solid var(--line); border-radius:10px; padding:10px 13px; font-family:var(--font-body); font-size:13.5px; background:var(--cream); color:var(--ink);}
+.vocabform textarea{grid-column:1/-1; resize:vertical; min-height:44px;}
+.vocabform input:focus, .vocabform textarea:focus{outline:none; border-color:var(--magenta);}
+.vocablist{display:flex; flex-direction:column; gap:10px; max-height:360px; overflow-y:auto; padding-right:4px;}
+.vocabrow{display:flex; align-items:center; gap:12px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--cream);}
+.vocabrow .vword{font-family:var(--font-display); font-weight:600; font-size:15px; min-width:110px;}
+.vocabrow .vua{color:var(--magenta-deep); font-weight:700; font-size:13px; min-width:100px;}
+.vocabrow .vex{font-size:12px; color:var(--ink-soft); flex:1; font-style:italic;}
+.statustag{font-size:10.5px; font-weight:700; padding:4px 10px; border-radius:999px; cursor:pointer; border:none; white-space:nowrap;}
+.statustag.learning{background:var(--blush-deep); color:var(--magenta-deep);}
+.statustag.known{background:var(--sage-pale); color:var(--sage-deep);}
+.delbtn{background:none; border:none; color:var(--gray); cursor:pointer; font-size:15px; padding:2px 4px;}
+.delbtn:hover{color:var(--magenta-deep);}
+.emptystate{text-align:center; padding:30px 10px; color:var(--gray); font-size:13px;}
+
+/* FLASHCARD REVIEW MODAL */
+.modal-overlay{position:fixed; inset:0; background:rgba(46,42,37,.45); display:none; align-items:center; justify-content:center; z-index:100; padding:20px;}
+.modal-overlay.show{display:flex;}
+.modalbox{background:var(--surface); border-radius:var(--radius-lg); padding:30px; max-width:380px; width:100%; text-align:center; box-shadow:var(--shadow-lg); position:relative;}
+.modalclose{position:absolute; top:14px; right:16px; background:none; border:none; font-size:18px; color:var(--gray); cursor:pointer;}
+.reviewcard{perspective:1200px; height:190px; margin:20px 0; cursor:pointer;}
+.reviewcard .inner{position:relative; width:100%; height:100%; transition:transform .55s var(--ease); transform-style:preserve-3d;}
+.reviewcard.flipped .inner{transform:rotateY(180deg);}
+.reviewcard .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; border:1px solid var(--line); padding:18px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px;}
+.reviewcard .front{background:var(--cream);}
+.reviewcard .back{background:var(--sage-pale); transform:rotateY(180deg);}
+.reviewcard .rterm{font-family:var(--font-display); font-weight:600; font-size:20px;}
+.reviewcard .rua{font-size:17px; color:var(--magenta-deep); font-weight:700;}
+.reviewcard .rex{font-size:12px; color:var(--ink-soft); font-style:italic;}
+.reviewnav{display:flex; gap:10px; justify-content:center;}
+.reviewcount{font-size:11.5px; color:var(--ink-soft); margin-bottom:6px;}
+
+/* DICTIONARY */
+.dictbox{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); padding:30px; text-align:center; box-shadow:var(--shadow-sm);}
+.dictsearch{display:flex; gap:10px; max-width:420px; margin:18px auto 0;}
+.dictsearch input{flex:1; border:1px solid var(--line); border-radius:999px; padding:12px 18px; font-size:14px; background:var(--cream);}
+.dictsearch input:focus{outline:none; border-color:var(--magenta);}
+.dictresult{margin-top:20px; text-align:left; max-width:420px; margin-left:auto; margin-right:auto; font-size:13px; color:var(--ink-soft); min-height:24px;}
+
+/* TOOLS */
+.toolrow{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px;}
+.toolcard{display:flex; align-items:center; gap:14px; padding:18px 20px;}
+.toolicon{width:42px;height:42px;border-radius:50%; background:var(--magenta-pale); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;}
+.toolcard h4{margin:0 0 3px; font-family:var(--font-display); font-size:15.5px; font-weight:600;}
+.toolcard p{margin:0; font-size:11.5px; color:var(--ink-soft);}
+
+footer{text-align:center; padding:30px; color:var(--ink-soft); font-size:11.5px; border-top:1px solid var(--line); margin-top:30px;}
+
+@media(max-width:640px){
+  .hero h1{font-size:32px;}
+  .vocabform{grid-template-columns:1fr;}
+  main{padding:8px 16px 80px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="mark"></div>
+    <div>
+      <div class="name">Study Room</div>
+      <div class="tag">English for Nail Technology</div>
+    </div>
+  </div>
+  <nav class="navlinks">
+    <a href="#lessons">Lessons</a>
+    <a href="#vocabulary">My Vocabulary</a>
+    <a href="#dictionary">Quick Dictionary</a>
+    <a href="#tools">Tools</a>
+  </nav>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="eyebrow">Study Room</div>
+    <h1>English <em>for Nail Technology</em></h1>
+    <h2>a calm, professional place to learn</h2>
+    <p>Welcome back. Build your English and your professional nail knowledge together, one gentle Unit at a time.</p>
+    <a class="btn primary" href="nail_structure_growth.html">Continue Learning →</a>
+  </section>
+
+  <!-- LESSONS -->
+  <section id="lessons">
+    <div class="sectionhead">
+      <div class="lbl">
+        <h2>Lessons</h2>
+        <p>Every Topic in your course, organized into Units you can open any time.</p>
+      </div>
+    </div>
+    <div class="grid" id="lessonsGrid"></div>
+  </section>
+
+  <!-- MY VOCABULARY -->
+  <section id="vocabulary">
+    <div class="sectionhead">
+      <div class="lbl">
+        <h2>My Vocabulary</h2>
+        <p>Save the words that matter most to you, and review them anytime with flashcards.</p>
+      </div>
+      <div class="vocabstats" id="vocabStats"></div>
+    </div>
+
+    <div class="vocabpanel">
+      <div class="vocabtop">
+        <strong style="font-family:var(--font-display); font-size:15px;">Add a new word</strong>
+        <button class="btn small ghost" id="reviewBtn" type="button">🗂️ Review with Flashcards</button>
+      </div>
+      <form class="vocabform" id="vocabForm">
+        <input type="text" id="inputWord" placeholder="English word (e.g. cuticle)" required>
+        <input type="text" id="inputUa" placeholder="Ukrainian translation (e.g. кутикула)" required>
+        <input type="text" id="inputIpa" placeholder="Pronunciation (e.g. /ˈkjuːtɪkəl/)">
+        <input type="text" id="inputTag" placeholder="Unit or Topic (optional)">
+        <textarea id="inputExample" placeholder="Example sentence (optional)"></textarea>
+        <div style="grid-column:1/-1; text-align:right;">
+          <button class="btn primary small" type="submit">+ Save Word</button>
+        </div>
+      </form>
+
+      <div class="vocablist" id="vocabList"></div>
+    </div>
+  </section>
+
+  <!-- QUICK DICTIONARY -->
+  <section id="dictionary">
+    <div class="sectionhead">
+      <div class="lbl">
+        <h2>Quick Dictionary</h2>
+        <p>Look up any English word you don't know yet.</p>
+      </div>
+    </div>
+    <div class="dictbox">
+      <div style="font-family:var(--font-display); font-style:italic; color:var(--ink-soft); font-size:14px;">Search any word, right here in your Study Room</div>
+      <div class="dictsearch">
+        <input type="text" id="dictInput" placeholder="Type a word, e.g. &quot;matrix&quot;">
+        <button class="btn primary small" id="dictSearchBtn" type="button">Search</button>
+      </div>
+      <div class="dictresult" id="dictResult">📖 The dictionary connection is coming soon. For now, try Cambridge Dictionary below in Useful Tools.</div>
+    </div>
+  </section>
+
+  <!-- USEFUL TOOLS -->
+  <section id="tools">
+    <div class="sectionhead">
+      <div class="lbl">
+        <h2>Useful Tools</h2>
+        <p>Trusted outside resources to support your English practice. These open in a new tab.</p>
+      </div>
+    </div>
+    <div class="toolrow">
+      <a class="card toolcard" href="https://youglish.com/" target="_blank" rel="noopener noreferrer">
+        <div class="toolicon">🎬</div>
+        <div>
+          <h4>YouGlish</h4>
+          <p>Hear real people pronounce any word in real videos</p>
+        </div>
+      </a>
+      <a class="card toolcard" href="https://dictionary.cambridge.org/" target="_blank" rel="noopener noreferrer">
+        <div class="toolicon">📕</div>
+        <div>
+          <h4>Cambridge Dictionary</h4>
+          <p>Definitions, pronunciation, and examples</p>
+        </div>
+      </a>
+      <div class="card toolcard comingsoon" style="min-height:auto;">
+        <div>
+          <span class="plus">+</span>
+          More tools coming soon
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Study Room · English for Nail Technology · Made for students who care about doing it right</footer>
+
+<!-- FLASHCARD REVIEW MODAL -->
+<div class="modal-overlay" id="reviewModal">
+  <div class="modalbox">
+    <button class="modalclose" id="closeReview" type="button">✕</button>
+    <div class="reviewcount" id="reviewCount"></div>
+    <div class="reviewcard" id="reviewCard">
+      <div class="inner">
+        <div class="face front">
+          <div class="rterm" id="rTerm"></div>
+          <div id="rIpa" style="font-size:11px;color:var(--ink-soft);font-style:italic;"></div>
+        </div>
+        <div class="face back">
+          <div class="rua" id="rUa"></div>
+          <div class="rex" id="rEx"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reviewnav">
+      <button class="btn ghost small" id="reviewPrev" type="button">← Prev</button>
+      <button class="btn primary small" id="reviewNext" type="button">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   LESSONS / TOPICS — add new Topics here; the homepage renders them
+   automatically. This is the ONLY place you need to edit to add lessons.
+   ========================================================================= */
+const TOPICS = [
+  {
+    title: "Nail Structure &amp; Growth",
+    tag: "Topic 1",
+    description: "Learn the parts of the natural nail, how nails grow, and how to talk about them like a professional — in simple English.",
+    units: 9,
+    href: "nail_structure_growth.html"
+  }
+  // 👉 To add a new lesson later, copy the block above and change the values.
+  // Example:
+  // {
+  //   title: "Nail Disorders &amp; Diseases",
+  //   tag: "Topic 2",
+  //   description: "...",
+  //   units: 8,
+  //   href: "nail_disorders.html"
+  // }
+];
+
+function renderLessons(){
+  const grid = document.getElementById('lessonsGrid');
+  grid.innerHTML = '';
+  TOPICS.forEach(t=>{
+    const card = document.createElement('a');
+    card.className = 'card topiccard';
+    card.href = t.href;
+    card.innerHTML = `
+      <span class="topictag">${t.tag}</span>
+      <h3>${t.title}</h3>
+      <div class="desc">${t.description}</div>
+      <div class="meta">📘 ${t.units} Units</div>
+      <div class="rowend">
+        <span class="btn small ghost" style="pointer-events:none;">Open Lesson →</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // "coming soon" placeholder card, so the grid never looks empty as you add more
+  const soon = document.createElement('div');
+  soon.className = 'card comingsoon';
+  soon.innerHTML = `<div><span class="plus">+</span>More Topics coming soon</div>`;
+  grid.appendChild(soon);
+}
+renderLessons();
+
+/* =========================================================================
+   MY VOCABULARY — stored locally in the student's own browser (localStorage).
+   No server or account needed. Works fully offline and on GitHub Pages.
+   ========================================================================= */
+const VOCAB_KEY = 'studyroom_vocab_v1';
+
+function loadVocab(){
+  try{
+    const raw = localStorage.getItem(VOCAB_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function saveVocab(list){
+  try{ localStorage.setItem(VOCAB_KEY, JSON.stringify(list)); }
+  catch(e){ console.error('Could not save vocabulary:', e); }
+}
+
+let vocab = loadVocab();
+
+function renderVocab(){
+  const list = document.getElementById('vocabList');
+  const stats = document.getElementById('vocabStats');
+  list.innerHTML = '';
+
+  const learningCount = vocab.filter(w=>w.status==='learning').length;
+  const knownCount = vocab.filter(w=>w.status==='known').length;
+  stats.innerHTML = `
+    <span class="statpill">📚 ${vocab.length} saved</span>
+    <span class="statpill">🌱 ${learningCount} learning</span>
+    <span class="statpill sage">✓ ${knownCount} know it</span>
+  `;
+
+  if(vocab.length === 0){
+    list.innerHTML = `<div class="emptystate">No words saved yet. Add your first word above — it will be saved right in your browser.</div>`;
+    return;
+  }
+
+  vocab.slice().reverse().forEach(w=>{
+    const row = document.createElement('div');
+    row.className = 'vocabrow';
+    row.innerHTML = `
+      <span class="vword">${escapeHtml(w.en)}</span>
+      <span class="vua">${escapeHtml(w.ua)}</span>
+      <span class="vex">${w.ipa ? escapeHtml(w.ipa)+' ' : ''}${w.example ? '— '+escapeHtml(w.example) : ''}</span>
+      <button class="statustag ${w.status==='known' ? 'known' : 'learning'}" data-id="${w.id}">${w.status==='known' ? '✓ I know it' : '🌱 Learning'}</button>
+      <button class="delbtn" data-del="${w.id}" title="Delete">✕</button>
+    `;
+    list.appendChild(row);
+  });
+
+  list.querySelectorAll('.statustag').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.dataset.id;
+      const word = vocab.find(w=>w.id===id);
+      if(word){
+        word.status = word.status === 'known' ? 'learning' : 'known';
+        saveVocab(vocab);
+        renderVocab();
+      }
+    });
+  });
+  list.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      vocab = vocab.filter(w=>w.id !== btn.dataset.del);
+      saveVocab(vocab);
+      renderVocab();
+    });
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+document.getElementById('vocabForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const en = document.getElementById('inputWord').value.trim();
+  const ua = document.getElementById('inputUa').value.trim();
+  const ipa = document.getElementById('inputIpa').value.trim();
+  const example = document.getElementById('inputExample').value.trim();
+  const tag = document.getElementById('inputTag').value.trim();
+  if(!en || !ua) return;
+
+  vocab.push({
+    id: 'w_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+    en, ua, ipa, example, tag,
+    status: 'learning',
+    added: Date.now()
+  });
+  saveVocab(vocab);
+  renderVocab();
+  e.target.reset();
+});
+
+renderVocab();
+
+/* -- Flashcard review modal -- */
+let reviewIndex = 0;
+let reviewSet = [];
+
+function openReview(){
+  reviewSet = vocab.slice();
+  if(reviewSet.length === 0){
+    alert('You have no saved words yet. Add a few words first, then come back to review them!');
+    return;
+  }
+  reviewIndex = 0;
+  document.getElementById('reviewModal').classList.add('show');
+  showReviewCard();
+}
+function closeReview(){
+  document.getElementById('reviewModal').classList.remove('show');
+}
+function showReviewCard(){
+  const w = reviewSet[reviewIndex];
+  document.getElementById('reviewCard').classList.remove('flipped');
+  document.getElementById('rTerm').textContent = w.en;
+  document.getElementById('rIpa').textContent = w.ipa || '';
+  document.getElementById('rUa').textContent = w.ua;
+  document.getElementById('rEx').textContent = w.example || '';
+  document.getElementById('reviewCount').textContent = `Card ${reviewIndex+1} of ${reviewSet.length}`;
+}
+document.getElementById('reviewBtn').addEventListener('click', openReview);
+document.getElementById('closeReview').addEventListener('click', closeReview);
+document.getElementById('reviewCard').addEventListener('click', function(){
+  this.classList.toggle('flipped');
+});
+document.getElementById('reviewNext').addEventListener('click', ()=>{
+  reviewIndex = (reviewIndex + 1) % reviewSet.length;
+  showReviewCard();
+});
+document.getElementById('reviewPrev').addEventListener('click', ()=>{
+  reviewIndex = (reviewIndex - 1 + reviewSet.length) % reviewSet.length;
+  showReviewCard();
+});
+document.getElementById('reviewModal').addEventListener('click', (e)=>{
+  if(e.target.id === 'reviewModal') closeReview();
+});
+
+/* =========================================================================
+   QUICK DICTIONARY — visual shell only for now.
+   To connect a real free dictionary API later (e.g. api.dictionaryapi.dev),
+   replace the body of searchDictionary() with a fetch() call and render
+   the result into #dictResult. No key is needed for that particular API.
+   ========================================================================= */
+function searchDictionary(word){
+  const resultBox = document.getElementById('dictResult');
+  if(!word){
+    resultBox.textContent = '📖 The dictionary connection is coming soon. For now, try Cambridge Dictionary below in Useful Tools.';
+    return;
+  }
+  resultBox.innerHTML = `🔎 Dictionary search for "<b>${escapeHtml(word)}</b>" is not connected yet. This space is ready for a free dictionary service — for now, please use Cambridge Dictionary or YouGlish in Useful Tools below.`;
+}
+document.getElementById('dictSearchBtn').addEventListener('click', ()=>{
+  searchDictionary(document.getElementById('dictInput').value.trim());
+});
+document.getElementById('dictInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    searchDictionary(document.getElementById('dictInput').value.trim());
+  }
+});
+</script>
+</body>
+</html>
