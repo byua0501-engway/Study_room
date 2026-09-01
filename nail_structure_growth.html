@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nail Atelier — Nail Structure &amp; Growth</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --cream:#FBF8F3;
+  --cream-deep:#F3ECE2;
+  --surface:#FFFFFF;
+  --ink:#2E2A25;
+  --ink-soft:#6B6459;
+  --blush:#F6E4E7;
+  --blush-deep:#EED1D6;
+  --magenta:#B23A64;
+  --magenta-deep:#8E2E50;
+  --magenta-pale:#F7E4EC;
+  --sage:#7E9A78;
+  --sage-deep:#516B4C;
+  --sage-pale:#E8EFE5;
+  --gray:#9C958A;
+  --line:#E8E0D4;
+  --shadow-sm:0 2px 10px rgba(60,48,25,.06);
+  --shadow-md:0 10px 30px rgba(60,48,25,.10);
+  --shadow-lg:0 20px 50px rgba(60,48,25,.14);
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --font-display:'Fraunces', serif;
+  --font-body:'Work Sans', sans-serif;
+  --ease:cubic-bezier(.22,.9,.32,1.1);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; font-family:var(--font-body); color:var(--ink); background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse 800px 500px at 6% 0%, var(--blush) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, var(--sage-pale) 0%, transparent 55%);
+  background-attachment:fixed; background-repeat:no-repeat;
+}
+a{color:inherit;}
+button{font-family:var(--font-body);}
+::selection{background:var(--magenta-pale); color:var(--magenta-deep);}
+
+/* TOPBAR */
+.topbar{
+  position:sticky; top:0; z-index:60; background:color-mix(in srgb, var(--cream) 90%, transparent);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line);
+  padding:14px 24px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:10px; margin-right:auto;}
+.brand .mark{width:24px;height:24px;border-radius:50%; background:conic-gradient(var(--magenta) 0 260deg, transparent 260deg 360deg); box-shadow:0 0 0 3px var(--blush);}
+.brand .name{font-family:var(--font-display); font-weight:600; font-size:17.5px;}
+.brand .tag{font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-soft); font-weight:600;}
+.progresspill{display:flex; align-items:center; gap:8px; background:var(--magenta-pale); color:var(--magenta-deep); border:1px solid var(--blush-deep); padding:7px 14px; border-radius:999px; font-weight:700; font-size:12.5px;}
+
+/* RAIL */
+.rail{max-width:1080px; margin:0 auto; padding:14px 24px 2px; display:flex; align-items:center; overflow-x:auto;}
+.railnode{display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; padding:2px 12px; flex-shrink:0; background:none; border:none;}
+.dot{width:28px;height:28px;border-radius:50%; background:var(--surface); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--ink-soft); transition:.25s var(--ease);}
+.railnode.done .dot{border-color:var(--sage); background:var(--sage); color:#fff;}
+.railnode.active .dot{border-color:var(--magenta); box-shadow:0 0 0 4px var(--blush); color:var(--magenta-deep); background:#fff;}
+.railnode .lbl{font-size:10.5px; font-weight:600; color:var(--ink-soft);}
+.railnode.active .lbl{color:var(--magenta-deep);}
+.railtrack{flex:1; height:2px; background:var(--line); min-width:14px;}
+.railtrack.filled{background:var(--sage);}
+
+main{max-width:880px; margin:0 auto; padding:8px 22px 100px;}
+.section{display:none;}
+.section.active{display:block; animation:rise .45s var(--ease);}
+@keyframes rise{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;}}
+
+/* HERO (CSS only, no images) */
+.hero{
+  position:relative; border-radius:var(--radius-lg); padding:44px 32px; margin:16px 0 28px; overflow:hidden;
+  background:linear-gradient(120deg, var(--blush) 0%, var(--cream) 55%, var(--sage-pale) 100%);
+  border:1px solid var(--line);
+}
+.hero::before{content:''; position:absolute; top:-60px; right:-60px; width:220px;height:220px; border-radius:50%; background:radial-gradient(circle, var(--magenta) 0%, transparent 70%); opacity:.14;}
+.hero .eyebrow{font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--magenta-deep); font-weight:700; margin-bottom:10px;}
+.hero h1{font-family:var(--font-display); font-weight:600; font-size:32px; line-height:1.15; margin:0 0 10px;}
+.hero h1 em{font-style:italic; font-weight:400; color:var(--sage-deep);}
+.hero p{font-size:14.5px; color:var(--ink-soft); max-width:520px; line-height:1.7; margin:0;}
+
+/* Chapter header (no photo — soft gradient band) */
+.chapterhead{
+  border-radius:var(--radius-md); padding:24px 26px; margin-bottom:20px; color:#fff;
+  background:linear-gradient(120deg, var(--magenta-deep), var(--magenta));
+}
+.chapterhead .kicker{font-size:10.5px; letter-spacing:2px; text-transform:uppercase; opacity:.85; font-weight:700; margin-bottom:5px;}
+.chapterhead h3{font-family:var(--font-display); font-weight:500; font-style:italic; font-size:18px; margin:0; line-height:1.4;}
+
+h2.sectitle{font-family:var(--font-display); font-weight:600; font-size:22px; margin:26px 0 4px; display:flex; align-items:center; gap:10px;}
+h2.sectitle .num{width:28px;height:28px;border-radius:50%; background:var(--magenta); color:#fff; font-family:var(--font-body); font-size:12px; display:flex;align-items:center;justify-content:center; font-weight:700; flex-shrink:0;}
+.secsub{color:var(--ink-soft); font-size:13px; margin:0 0 18px; padding-left:38px; line-height:1.6; max-width:600px;}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:20px 22px; margin-bottom:16px; box-shadow:var(--shadow-sm);}
+
+/* ukr toggle */
+.uatoggle{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; border:1px solid var(--line); background:var(--surface); color:var(--ink-soft); padding:6px 12px; border-radius:999px; cursor:pointer; font-weight:600;}
+.uatoggle.on{background:var(--sage-pale); color:var(--sage-deep); border-color:var(--sage);}
+
+/* FLASHCARDS */
+.flashgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; margin-bottom:8px;}
+.flashcard{perspective:1200px; height:180px; cursor:pointer;}
+.flashcard .inner{position:relative; width:100%; height:100%; transition:transform .55s var(--ease); transform-style:preserve-3d;}
+.flashcard.flipped .inner{transform:rotateY(180deg);}
+.flashcard .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; border:1px solid var(--line); padding:16px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:6px;}
+.flashcard .front{background:var(--surface);}
+.flashcard:not(.flipped):hover .front{border-color:var(--magenta); box-shadow:var(--shadow-md); transform:translateY(-2px);}
+.flashcard .back{background:var(--sage-pale); transform:rotateY(180deg); overflow-y:auto;}
+.flashcard .term{font-family:var(--font-display); font-weight:600; font-size:17px;}
+.flashcard .ipa{font-size:11px; color:var(--ink-soft); font-style:italic;}
+.flashcard .ua{font-size:15px; color:var(--magenta-deep); font-weight:700;}
+.flashcard .def{font-size:11.5px; color:var(--ink-soft); line-height:1.45;}
+.speakbtn{border:none; background:var(--ink); color:#fff; width:26px;height:26px;border-radius:50%; cursor:pointer; font-size:11px; display:flex;align-items:center;justify-content:center; flex-shrink:0;}
+.speakbtn:hover{background:var(--magenta);}
+.row{display:flex; align-items:center; gap:7px;}
+
+/* MATCHING */
+.matchgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px 20px;}
+.matchcol .mitem{padding:10px 12px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; cursor:pointer; font-size:13px; background:var(--surface); transition:.2s var(--ease);}
+.matchcol .mitem:hover{border-color:var(--magenta); transform:translateX(2px);}
+.matchcol .mitem.selected{border-color:var(--magenta); background:var(--magenta-pale);}
+.matchcol .mitem.matched{border-color:var(--sage); background:var(--sage-pale); opacity:.6; cursor:default;}
+@media(max-width:620px){.matchgrid{grid-template-columns:1fr;}}
+
+/* CONCEPT CARDS */
+.conceptcard{border-left:4px solid var(--magenta); padding-left:16px; margin-bottom:18px;}
+.conceptcard h4{font-family:var(--font-display); font-size:17px; margin:0 0 6px; font-weight:600;}
+.conceptcard .kv{display:grid; grid-template-columns:90px 1fr; gap:4px 10px; font-size:13px; margin-bottom:4px;}
+.conceptcard .kv b{color:var(--ink-soft); font-weight:700; font-size:11px; letter-spacing:.5px; text-transform:uppercase; padding-top:2px;}
+.livingtag{display:inline-block; font-size:10.5px; font-weight:700; padding:3px 10px; border-radius:999px; margin-top:4px;}
+.livingtag.alive{background:var(--sage-pale); color:var(--sage-deep);}
+.livingtag.dead{background:var(--blush-deep); color:var(--magenta-deep);}
+.confusebox{background:var(--magenta-pale); border-radius:10px; padding:10px 14px; font-size:12.5px; color:var(--magenta-deep); margin-top:6px;}
+
+/* READING */
+.readingpara{font-size:15.5px; line-height:1.9; margin-bottom:14px; padding:16px 18px; border-radius:12px; background:var(--surface); border:1px solid var(--line);}
+.gloss{color:var(--magenta-deep); font-weight:700; cursor:pointer; border-bottom:1px dashed var(--magenta-deep);}
+.pronpop{position:fixed; z-index:200; background:var(--ink); color:var(--cream); padding:7px 11px; border-radius:8px; font-size:12px; display:none; pointer-events:none; max-width:220px; box-shadow:var(--shadow-lg);}
+
+/* EXERCISES */
+.exq{margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+.exq:last-child{border-bottom:none;}
+.exq .qtext{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+.optlist{display:flex; flex-direction:column; gap:7px;}
+.optlist label{display:flex; gap:9px; align-items:center; padding:10px 13px; border:1px solid var(--line); border-radius:10px; cursor:pointer; font-size:13.5px; transition:.2s var(--ease);}
+.optlist label:hover{border-color:var(--magenta);}
+.optlist label.correctpick{border-color:var(--sage); background:var(--sage-pale);}
+.optlist label.wrongpick{border-color:var(--magenta); background:var(--blush);}
+.optlist input{accent-color:var(--magenta);}
+.tfrow{display:flex; gap:9px;}
+.tfbtn{flex:1; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--surface); cursor:pointer; font-weight:600; font-size:13px; color:var(--ink-soft);}
+.tfbtn.selT.true{background:var(--sage-pale); border-color:var(--sage); color:var(--sage-deep);}
+.tfbtn.selF.true{background:var(--blush); border-color:var(--magenta); color:var(--magenta-deep);}
+.feedback{margin-top:9px; font-size:12.8px; font-weight:500; display:none; padding:10px 13px; border-radius:10px; line-height:1.5;}
+.feedback.correct{display:block; background:var(--sage-pale); color:var(--sage-deep);}
+.feedback.wrong{display:block; background:var(--blush); color:var(--magenta-deep);}
+input.gapinput{border:none; border-bottom:2px solid var(--magenta); background:transparent; font-family:var(--font-body); font-size:14px; padding:3px 5px; width:140px; color:var(--ink); text-align:center;}
+input.gapinput:focus{outline:none;}
+input.gapinput.correct{border-color:var(--sage); background:var(--sage-pale); border-radius:6px;}
+input.gapinput.wrong{border-color:var(--magenta); background:var(--blush); border-radius:6px;}
+.tinybtn{font-size:11.5px; border:1px solid var(--line); background:transparent; color:var(--magenta-deep); padding:6px 13px; border-radius:999px; cursor:pointer; font-weight:600;}
+.tinybtn:hover{background:var(--magenta-pale); border-color:var(--magenta);}
+.btn{border:none; border-radius:999px; padding:12px 24px; font-weight:700; font-size:13.5px; cursor:pointer;}
+.btn.primary{background:var(--ink); color:var(--cream);}
+.btn.primary:hover{background:var(--magenta-deep);}
+.btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink);}
+.btn.ghost:hover{border-color:var(--magenta); color:var(--magenta-deep);}
+.btn:disabled{opacity:.4; cursor:not-allowed;}
+
+/* TEST SCORE */
+.scorebox{text-align:center; padding:26px; border-radius:var(--radius-md); background:var(--sage-pale); display:none; margin-top:10px;}
+.scorebox.show{display:block;}
+.scorebox .big{font-family:var(--font-display); font-size:34px; font-weight:600; color:var(--sage-deep);}
+
+.navbar{display:flex; justify-content:space-between; align-items:center; margin-top:30px; padding-top:16px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft); font-weight:600;}
+footer{text-align:center; padding:28px; color:var(--ink-soft); font-size:11.5px;}
+
+/* WARM-UP / BREATHING */
+.breathwrap{display:flex; justify-content:center; align-items:center; padding:20px 0;}
+.breathcircle{
+  width:150px; height:150px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--blush), var(--magenta-pale) 60%, var(--magenta) 140%);
+  border:2px solid var(--magenta);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:600; font-size:15px; color:var(--magenta-deep);
+  transition:transform 4s ease-in-out;
+}
+.breathcircle.inhale{transform:scale(1.35);}
+.breathcircle.hold{transform:scale(1.35);}
+.breathcircle.exhale{transform:scale(1);}
+
+@media(max-width:620px){
+  .hero h1{font-size:25px;}
+  main{padding:8px 14px 90px;}
+  .secsub{padding-left:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="mark"></div>
+    <div>
+      <div class="name">The Nail Atelier</div>
+      <div class="tag">Nail Structure &amp; Growth</div>
+    </div>
+  </div>
+  <div class="progresspill">📘 <span id="progressText">Warm-Up</span></div>
+</div>
+
+<div class="rail" id="rail"></div>
+
+<div class="pronpop" id="pronpop"></div>
+
+<main>
+
+<div class="hero" id="heroBlock">
+  <div class="eyebrow">Chapter 8 · Part 1</div>
+  <h1>Nail Structure <em>&amp; Growth</em></h1>
+  <p>A gentle, step-by-step English &amp; professional course for nail technicians. Learn the parts of the natural nail, how nails grow, and how to talk about them like a professional — in simple English.</p>
+</div>
+
+<section class="section active" id="warmupSection">
+  <div class="chapterhead">
+    <div class="kicker">Before We Begin</div>
+    <h3>Take one minute to breathe, focus, and set up your mind for learning.</h3>
+  </div>
+
+  <h2 class="sectitle"><span class="num">🧘</span> Focus Breathing</h2>
+  <p class="secsub">A calm mind learns faster. Try this simple breathing pattern before you start: breathe in for 4 seconds, hold for 4 seconds, breathe out for 4 seconds.</p>
+  <div class="card" style="text-align:center;">
+    <div class="breathwrap">
+      <div class="breathcircle" id="breathCircle"><span id="breathLabel">Ready?</span></div>
+    </div>
+    <button class="btn primary" id="breathBtn" type="button" style="margin-top:14px;">Start Breathing (3 rounds)</button>
+  </div>
+
+  <h2 class="sectitle"><span class="num">💬</span> Words to Set Up Your Mind</h2>
+  <p class="secsub">Read each word out loud. These words will help you talk about your own learning in English.</p>
+  <div class="flashgrid" id="mindsetGrid"></div>
+
+  <div class="card" style="background:var(--sage-pale); border-color:var(--sage); text-align:center;">
+    <p style="font-family:var(--font-display); font-style:italic; font-size:16px; margin:0; color:var(--sage-deep);">"Every professional was once a beginner. Learn slowly. Learn well."</p>
+  </div>
+
+  <div class="navbar">
+    <div></div>
+    <div>Ready to begin?</div>
+    <button class="btn primary" id="startLessonBtn" type="button">Begin Unit 1 →</button>
+  </div>
+</section>
+
+<div id="unitsRoot"></div>
+
+</main>
+
+<footer>The Nail Atelier · Based on Milady, Standard Foundations — Chapter 8: Nail Structure and Growth</footer>
+
+<script>
+/* =========================================================================
+   COURSE DATA — 7 Units built from the provided Milady pages (155, 157, 158)
+   ========================================================================= */
+const UNITS = [
+
+/* ---------------- UNIT 1 (NEW — p.153) ---------------- */
+{
+  id:1,
+  title:"Welcome to the Natural Nail",
+  kicker:"Unit 1 · Meet the natural nail",
+  chapterNote:"Before we look at each part, let's meet the natural nail as a whole: what it is made of, what a healthy nail looks like, and all the parts that build the full nail unit.",
+  vocab:[
+    {term:"natural nail", ipa:"/ˈnætʃərəl neɪl/", ua:"природний ніготь", def:"the hard nail at the end of the finger or toe"},
+    {term:"appendage", ipa:"/əˈpɛndɪdʒ/", ua:"придаток", def:"a part that grows from, and is attached to, the body"},
+    {term:"onyx", ipa:"/ˈɒnɪks/", ua:"онікс (наукова назва нігтя)", def:"the scientific name for the natural nail"},
+    {term:"durable", ipa:"/ˈdjʊərəbəl/", ua:"міцний, довговічний", def:"strong; not easily damaged"},
+    {term:"firm", ipa:"/fɜːrm/", ua:"твердий, пружний", def:"solid; not weak or soft"},
+    {term:"flexible", ipa:"/ˈflɛksəbəl/", ua:"гнучкий", def:"able to bend without breaking"},
+    {term:"translucent", ipa:"/trænsˈluːsənt/", ua:"напівпрозорий", def:"letting some light pass through"},
+    {term:"porous", ipa:"/ˈpɔːrəs/", ua:"пористий", def:"having tiny holes that let liquid or air pass through"},
+    {term:"humidity", ipa:"/hjuːˈmɪdəti/", ua:"вологість", def:"the amount of water in the air"},
+    {term:"rigid", ipa:"/ˈrɪdʒɪd/", ua:"жорсткий, негнучкий", def:"stiff; hard to bend"}
+  ],
+  concepts:[
+    {term:"Natural Nail / Onyx", what:"the hard, protective plate at the end of the finger or toe; its scientific name is onyx", where:"an appendage of the skin — part of the integumentary (skin) system", func:"protects the tips of the fingers and toes; made mainly of keratin, the same fiber-shaped protein found in skin and hair — but nail keratin is more durable than the keratin in hair or skin", living:null},
+    {term:"Signs of a healthy nail", what:"a checklist for healthy nails", where:"—", func:"firm, flexible, shiny, and slightly pink; smooth, unspotted surface with no splits or deep grooves; whitish and translucent, with the pinkish/beige nail bed showing through", living:null},
+    {term:"Water content", what:"how much water is inside the nail plate", where:"in the nail plate itself", func:"the nail plate is porous, so water passes through it more easily than through normal skin; a healthy nail has 15–25% water content; lower water content makes the nail more rigid; oil-based conditioner or polish can reduce water loss and improve flexibility", living:null},
+    {term:"The Natural Nail Unit", what:"all the parts of the finger from the tip to the first knuckle, together", where:"—", func:"is made of: nail bed, matrix, nail plate, cuticle, eponychium, hyponychium, specialized ligaments, and nail folds — you will learn each one in the Units ahead", living:null}
+  ],
+  confuse:"⚠️ A healthy nail can feel dry and hard, but it still has 15–25% water inside it. Water content, not dryness you can feel, is what controls flexibility.",
+  reading:[
+    "The <span class='gloss' data-ua='природний ніготь'>natural nail</span> is the hard, protective plate at the end of the finger or toe. Its scientific name is <span class='gloss' data-ua='онікс (наукова назва нігтя)'>onyx</span>. The natural nail is an <span class='gloss' data-ua='придаток'>appendage</span> of the skin — it is part of the skin system of the body. The nail plate protects the tips of the fingers and toes, and its look can show the general health of the body.",
+    "The natural nail is made mainly of keratin — the same protein found in skin and hair. But the keratin in nails is more <span class='gloss' data-ua='міцний, довговічний'>durable</span> than the keratin in hair or skin.",
+    "A normal, healthy nail is <span class='gloss' data-ua='твердий, пружний'>firm</span> and <span class='gloss' data-ua='гнучкий'>flexible</span>, shiny, and slightly pink. Its surface is usually smooth, with no spots, splits, or deep grooves. A healthy nail looks whitish and <span class='gloss' data-ua='напівпрозорий'>translucent</span>, with the pinkish or beige color of the nail bed showing through underneath.",
+    "The nail plate is <span class='gloss' data-ua='пористий'>porous</span> — water can pass through it more easily than through normal skin. A healthy nail may feel dry and hard, but it actually has a water content of between 15 and 25 percent. This water content is connected to the <span class='gloss' data-ua='вологість'>humidity</span> of the air around it, and it directly affects how flexible the nail is: the lower the water content, the more <span class='gloss' data-ua='жорсткий, негнучкий'>rigid</span> the nail becomes. Using an oil-based nail conditioner or nail polish can reduce water loss and improve flexibility.",
+    "All the parts of the finger, from the tip to the first knuckle, are called the natural nail unit. This unit is made of several parts: the nail bed, matrix, nail plate, cuticle, eponychium, hyponychium, specialized ligaments, and nail folds. In the Units ahead, we will learn about each of these parts, one at a time."
+  ],
+  comprehension:{
+    mcq:[
+      {q:"What is the scientific name for the natural nail?", opts:["Keratin","Onyx","Matrix","Appendage"], c:1, exp:"'Onyx' is the technical, scientific name for the natural nail."},
+      {q:"What percentage of water does a healthy nail plate normally contain?", opts:["0–5%","15–25%","50–60%","almost 100%"], c:1, exp:"A healthy nail has a water content of about 15–25%, even though it can feel dry and hard."}
+    ],
+    tf:[
+      {s:"The natural nail is part of the skin system of the body.", a:true, exp:"Correct — the natural nail is an appendage of the skin, part of the integumentary system."}
+    ],
+    gap:[
+      {before:"A healthy nail plate is ", answer:"firm", after:" and flexible, shiny, and slightly pink."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What is the natural nail mainly made of?", opts:["Water","Keratin","Blood vessels","Fat"], c:1, exp:"The natural nail is made mainly of keratin, the same protein found in hair and skin."},
+    {type:'tf', s:"The keratin in nails is less durable than the keratin in hair.", a:false, exp:"It is the opposite — nail keratin is MORE durable than the keratin found in hair or skin."},
+    {type:'mcq', q:"Which of these is a sign of a healthy nail?", opts:["Deep grooves and spots","Firm, flexible, shiny, and slightly pink","Completely opaque, no color showing through","Very low water content, under 5%"], c:1, exp:"A healthy nail is firm, flexible, shiny, and slightly pink, with a smooth surface."},
+    {type:'gap', before:"The natural nail is an ", answer:"appendage", after:" of the skin."},
+    {type:'mcq', q:"Why can a healthy nail look dry and hard, but still be healthy?", opts:["Because healthy nails have 0% water","Because it still has 15–25% water content, even if it feels dry","Because the nail plate is not connected to water at all","Because dryness always means disease"], c:1, exp:"Even a nail that feels dry and hard can have a normal 15–25% water content — feeling dry does not mean unhealthy."},
+    {type:'tf', s:"The nail plate is porous, so water can pass through it.", a:true, exp:"Correct — the nail plate is porous, and water passes through it more easily than through normal skin."},
+    {type:'mcq', q:"What happens to a nail plate when its water content is lower?", opts:["It becomes more flexible","It becomes more rigid","It grows faster","It changes color permanently"], c:1, exp:"Lower water content makes the nail plate more rigid (stiffer)."},
+    {type:'gap', before:"An oil-based nail conditioner can reduce water loss and improve ", answer:"flexibility", after:"."},
+    {type:'mcq', q:"What is the 'natural nail unit'?", opts:["Only the nail plate","All the parts of the finger from the tip to the first knuckle","Only the matrix and cuticle","The whole hand"], c:1, exp:"The natural nail unit includes all the parts of the finger from the tip to the first knuckle."},
+    {type:'tf', s:"The nail plate's water content has nothing to do with the humidity of the air.", a:false, exp:"The water content of the nail is related to the humidity of the surrounding air."},
+    {type:'mcq', q:"Which parts make up the natural nail unit?", opts:["Only skin and bone","Nail bed, matrix, nail plate, cuticle, eponychium, hyponychium, ligaments, and nail folds","Only the nail plate and polish","Only the matrix"], c:1, exp:"All of these parts together form the natural nail unit — you will study each one closely."},
+    {type:'gap', before:"'Rigid' means ", answer:"stiff", after:"; hard to bend."},
+    {type:'tf', s:"Nail keratin and skin keratin are exactly the same in every way.", a:false, exp:"They are the same type of protein, but nail keratin is more durable than skin or hair keratin."},
+    {type:'mcq', q:"What does 'translucent' mean?", opts:["Completely see-through, like glass","Letting some light pass through","Completely solid, no light passes","Very shiny only"], c:1, exp:"'Translucent' means letting some light pass through — this is why the nail bed's color can show through a healthy nail."}
+  ]
+},
+
+/* ---------------- UNIT 2 (was Unit 1) ---------------- */
+{
+  id:2,
+  title:"The Nail Plate &amp; The Nail Bed",
+  kicker:"Unit 2 · The parts you can see",
+  chapterNote:"We start with the two structures every client can see: the hard nail plate on top, and the living nail bed underneath it.",
+  vocab:[
+    {term:"plate", ipa:"/pleɪt/", ua:"пластина", def:"a flat, hard piece of something"},
+    {term:"bed", ipa:"/bɛd/", ua:"ложе (нігтьове ложе)", def:"the part under something that supports it"},
+    {term:"hard", ipa:"/hɑːrd/", ua:"твердий", def:"not soft; solid"},
+    {term:"skin", ipa:"/skɪn/", ua:"шкіра", def:"the outer covering of the body"},
+    {term:"grow", ipa:"/ɡroʊ/", ua:"рости", def:"to become bigger over time"},
+    {term:"slide", ipa:"/slaɪd/", ua:"ковзати", def:"to move smoothly over a surface"},
+    {term:"keratin", ipa:"/ˈkɛrətɪn/", ua:"кератин", def:"a hard protein that makes nails and hair"},
+    {term:"visible", ipa:"/ˈvɪzəbəl/", ua:"видимий", def:"that you can see"},
+    {term:"layer", ipa:"/ˈleɪər/", ua:"шар", def:"one thin level of material on top of another"},
+    {term:"free edge", ipa:"/friː ɛdʒ/", ua:"вільний край", def:"the part of the nail plate that goes past the finger tip"}
+  ],
+  concepts:[
+    {term:"Nail Plate", what:"the hard, hardened keratin plate", where:"on top of the nail bed", func:"protects the finger tip; it is made of about 100 thin layers of nail cells; it is formed by the matrix", living:null},
+    {term:"Nail Bed", what:"a part of living skin", where:"under the nail plate", func:"supports the nail plate as it grows to the free edge; has blood vessels and many nerves; joined to the plate by a thin tissue called the bed epithelium", living:"alive"}
+  ],
+  confuse:"⚠️ Many nail technicians confuse the <b>nail plate</b> (the hard part you polish) with the <b>nail bed</b> (the living skin under it). Remember: polish goes on the nail <b>plate</b>, not the nail <b>bed</b>.",
+  reading:[
+    "The <span class='gloss' data-ua='пластина'>nail plate</span> is the hard, <span class='gloss' data-ua='кератин'>keratin</span> part of the nail. It is not one thick piece. It has about 100 thin <span class='gloss' data-ua='шар'>layers</span>. The nail plate sits on top of the nail bed and slowly <span class='gloss' data-ua='ковзати'>slides</span> forward as it grows.",
+    "The part of the nail plate that goes past the finger tip is called the <span class='gloss' data-ua='вільний край'>free edge</span>.",
+    "The <span class='gloss' data-ua='нігтьове ложе'>nail bed</span> is different. It is a part of living <span class='gloss' data-ua='шкіра'>skin</span>. It supports the nail plate while the plate grows to the free edge. The nail bed has many blood vessels, so it can look pink. It also has many nerves — this is why an injury to the nail bed can hurt. A thin tissue called the bed epithelium joins the nail bed to the nail plate and helps guide the plate as it grows."
+  ],
+  comprehension:{
+    tf:[
+      {s:"The nail plate is a part of living skin.", a:false, exp:"The nail bed is living skin. The nail plate is hardened keratin — it is not living skin itself."},
+      {s:"The nail bed has many blood vessels and nerves.", a:true, exp:"Correct. That is why the nail bed can look pink and why an injury there can hurt."}
+    ],
+    mcq:[
+      {q:"What is the free edge?", opts:["The whitish half-moon at the base of the nail","The part of the nail plate that extends past the finger tip","The living skin under the nail plate","A tool used to file nails"], c:1, exp:"The free edge is simply the end part of the nail plate that has grown past the finger tip."}
+    ],
+    gap:[
+      {before:"The nail plate is made of about 100 ", answer:"layers", after:" of keratin cells."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"Which structure is a part of living skin?", opts:["Nail plate","Nail bed","Free edge","Keratin"], c:1, exp:"The nail bed is living skin. The nail plate is hardened keratin sitting on top of it."},
+    {type:'tf', s:"The nail plate is the most visible part of the nail unit.", a:true, exp:"Yes — the nail plate is what we see and polish."},
+    {type:'mcq', q:"What connects the nail bed to the nail plate?", opts:["The matrix","The bed epithelium","The lunula","The cuticle"], c:1, exp:"The bed epithelium is the thin tissue that joins the nail bed to the nail plate and helps guide it forward."},
+    {type:'tf', s:"The nail bed can look pink because it has many blood vessels.", a:true, exp:"Correct — the rich blood supply gives the nail bed area its pinkish colour."},
+    {type:'gap', before:"The ", answer:"free edge", after:" is the part of the nail plate that extends over the tip of the finger."},
+    {type:'mcq', q:"Nail polish should be applied to the:", opts:["nail bed","matrix","nail plate","cuticle"], c:2, exp:"Polish goes on the nail plate — the hard, visible part — never directly on the living nail bed."},
+    {type:'tf', s:"The nail plate has nerves, so cutting it hurts.", a:false, exp:"The nail plate itself is hardened keratin. Pain and nerves belong to the living nail bed, not the plate."},
+    {type:'mcq', q:"What is keratin?", opts:["A type of nail polish","A hard protein that makes nails and hair","A living skin cell","A cleaning product"], c:1, exp:"Keratin is a hard protein. It is the main material of the nail plate, hair, and skin's outer layer."},
+    {type:'mcq', q:"Which word means 'to move smoothly over a surface'?", opts:["grow","slide","seal","weaken"], c:1, exp:"'Slide' means to move smoothly — this is how the nail plate moves over the nail bed."},
+    {type:'gap', before:"The nail bed ", answer:"supports", after:" the nail plate as it grows toward the free edge."},
+    {type:'tf', s:"The nail plate is formed by the matrix.", a:true, exp:"Correct — matrix cells create the nail plate. You will learn more about the matrix in Unit 3."},
+    {type:'mcq', q:"Choose the correct word: 'The nail plate is ______, not soft.'", opts:["hard","sticky","visible","narrow"], c:0, exp:"'Hard' means not soft, solid — this describes the nail plate correctly."},
+    {type:'tf', s:"Toenail plates and fingernail plates are exactly the same thickness.", a:false, exp:"You will learn in Unit 6 that toenail plates are thicker than fingernail plates."},
+    {type:'mcq', q:"'Visible' means:", opts:["that you can see","that is hidden","that is dead","that hurts"], c:0, exp:"Visible means something that can be seen, like the visible part of the matrix (the lunula)."},
+    {type:'gap', before:"A ", answer:"layer", after:" is one thin level of material on top of another."}
+  ]
+},
+
+/* ---------------- UNIT 3 (was Unit 2) ---------------- */
+{
+  id:3,
+  title:"The Matrix &amp; The Cuticle",
+  kicker:"Unit 3 · Where nails are made, and what protects them",
+  chapterNote:"Now we go deeper: the matrix makes new nail cells, and the cuticle protects the space where the nail plate begins.",
+  vocab:[
+    {term:"matrix", ipa:"/ˈmeɪtrɪks/", ua:"матрикс", def:"the part that makes new nail plate cells"},
+    {term:"create", ipa:"/kriˈeɪt/", ua:"створювати", def:"to make something new"},
+    {term:"nourish", ipa:"/ˈnɜːrɪʃ/", ua:"живити", def:"to give food and blood so something can live and grow"},
+    {term:"lunula", ipa:"/ˈluːnjələ/", ua:"лунула", def:"the whitish half-moon shape at the base of the nail"},
+    {term:"attach", ipa:"/əˈtætʃ/", ua:"прикріплювати(ся)", def:"to join or connect one thing to another"},
+    {term:"seal", ipa:"/siːl/", ua:"запечатувати", def:"to close tightly so nothing can get in"},
+    {term:"sticky", ipa:"/ˈstɪki/", ua:"липкий", def:"a surface that sticks to your fingers"},
+    {term:"underneath", ipa:"/ˌʌndərˈniːθ/", ua:"під, знизу", def:"below or under something"},
+    {term:"colorless", ipa:"/ˈkʌlərləs/", ua:"безбарвний", def:"having no color"},
+    {term:"cuticle", ipa:"/ˈkjuːtɪkəl/", ua:"кутикула", def:"dead, colorless tissue attached to the nail plate"}
+  ],
+  concepts:[
+    {term:"Matrix", what:"the area that forms nail plate cells", where:"under the nail fold, at the base of the nail plate", func:"contains nerves, lymph, and blood vessels that nourish it; it keeps creating new nail plate cells as long as it is healthy", living:"alive"},
+    {term:"Lunula", what:"the visible part of the matrix", where:"the whitish half-moon at the base of the nail plate", func:"shows the true, lighter color of the matrix; some lunulas are hidden under the eponychium", living:null},
+    {term:"Cuticle", what:"dead, colorless tissue", where:"comes from the underside of the skin; lies on top of the natural nail plate", func:"seals the space between the nail plate and the living skin above, to keep out foreign material and germs", living:"dead"}
+  ],
+  confuse:"⚠️ Do not confuse the <b>matrix</b> (living tissue that makes the nail) with the <b>cuticle</b> (dead tissue that protects the nail). The matrix creates; the cuticle protects.",
+  reading:[
+    "The <span class='gloss' data-ua='матрикс'>matrix</span> is the part of the nail unit where nail plate cells are made. It is full of nerves, lymph, and blood vessels that <span class='gloss' data-ua='живити'>nourish</span> the matrix cells. As long as the matrix stays healthy, it will keep making new nail plate cells.",
+    "Part of the matrix is visible — we call this the <span class='gloss' data-ua='лунула'>lunula</span>. It is the whitish half-moon shape at the base of the nail plate. This lighter color shows the true color of the matrix. Not everyone's lunula is easy to see; sometimes it stays hidden under the skin at the base of the nail.",
+    "The <span class='gloss' data-ua='кутикула'>cuticle</span> is very different from the matrix. The cuticle is dead, <span class='gloss' data-ua='безбарвний'>colorless</span> tissue. It comes from the <span class='gloss' data-ua='під, знизу'>underneath</span> side of the skin and lies on top of the natural nail plate. The cuticle is very <span class='gloss' data-ua='липкий'>sticky</span> and hard to remove. Its job is to <span class='gloss' data-ua='запечатувати'>seal</span> the space between the nail plate and the living skin above it, so dirt and germs cannot get in."
+  ],
+  comprehension:{
+    mcq:[
+      {q:"Which structure is living tissue?", opts:["The cuticle","The matrix","The free edge","The nail plate"], c:1, exp:"The matrix is alive — it has nerves, lymph, and blood vessels."},
+      {q:"What is the lunula?", opts:["The dead skin on top of the nail","The visible part of the matrix","A type of nail polish","The nail groove"], c:1, exp:"The lunula is simply the part of the matrix we can see — the whitish half-moon."}
+    ],
+    matchExtra:null,
+    gap:[
+      {before:"The cuticle is ", answer:"dead", after:", colorless tissue attached to the nail plate."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What is the main job of the matrix?", opts:["To protect the skin","To create new nail plate cells","To polish the nail","To remove dead skin"], c:1, exp:"The matrix's job is to create the cells that become the nail plate."},
+    {type:'tf', s:"The cuticle is living tissue.", a:false, exp:"The cuticle is dead, colorless tissue — this is different from the living matrix and nail bed."},
+    {type:'mcq', q:"Where is the lunula found?", opts:["At the free edge","At the base of the nail plate","Under the nail bed","On the side of the finger"], c:1, exp:"The lunula is the visible half-moon shape at the base of the nail plate."},
+    {type:'gap', before:"The matrix contains nerves, lymph, and ", answer:"blood vessels", after:" that nourish it."},
+    {type:'tf', s:"Everyone's lunula is easy to see.", a:false, exp:"Some lunulas stay hidden under the skin at the base of the nail — not everyone's is visible."},
+    {type:'mcq', q:"What does the cuticle do?", opts:["It creates new nail cells","It seals the space between the nail plate and the living skin above", "It gives the nail its pink color","It measures nail growth"], c:1, exp:"The cuticle seals that space, keeping out foreign material and microorganisms."},
+    {type:'mcq', q:"Choose the correct word: 'The matrix will ______ new cells as long as it is healthy.'", opts:["seal","create","remove","weaken"], c:1, exp:"'Create' means to make something new — this is exactly what the matrix does."},
+    {type:'tf', s:"The cuticle is easy to remove because it is not sticky.", a:false, exp:"The text says the cuticle is very sticky and difficult to remove."},
+    {type:'gap', before:"To ", answer:"attach", after:" means to join or connect one thing to another."},
+    {type:'mcq', q:"Which word means 'below or under something'?", opts:["visible","underneath","colorless","sticky"], c:1, exp:"'Underneath' means below or under something."},
+    {type:'mcq', q:"The lighter color of the lunula shows:", opts:["an infection","the true color of the matrix","dead skin","a nail disorder"], c:1, exp:"The lighter shade we see in the lunula reflects the true color of the underlying matrix."},
+    {type:'tf', s:"The matrix is found on top of the nail plate.", a:false, exp:"The matrix is under the nail fold, at the base of the nail plate — not on top of it."},
+    {type:'gap', before:"The matrix cells are ", answer:"nourished", after:" by nerves, lymph, and blood vessels."},
+    {type:'mcq', q:"Which structure protects the space between the nail plate and living skin?", opts:["Matrix","Free edge","Cuticle","Nail bed"], c:2, exp:"That protective, sealing job belongs to the cuticle."},
+    {type:'tf', s:"If the matrix is healthy, it keeps making new nail plate cells.", a:true, exp:"Correct — a healthy matrix continually produces new cells for the nail plate."}
+  ]
+},
+
+/* ---------------- UNIT 4 (NEW — p.156) ---------------- */
+{
+  id:4,
+  title:"Eponychium &amp; Hyponychium",
+  kicker:"Unit 4 · Living skin around the nail",
+  chapterNote:"The cuticle and the eponychium are often confused, but they are not the same thing — and knowing the difference is a legal, professional rule, not just a vocabulary point. We also meet a new structure: the hyponychium.",
+  vocab:[
+    {term:"eponychium", ipa:"/ˌɛpoʊˈnɪkiəm/", ua:"епоніхій", def:"living skin at the base of the nail plate, covering the matrix area"},
+    {term:"hyponychium", ipa:"/ˌhaɪpoʊˈnɪkiəm/", ua:"гіпоніхій", def:"the slightly thickened skin between the fingertip and the free edge of the nail plate"},
+    {term:"detach", ipa:"/dɪˈtætʃ/", ua:"відокремлюватися", def:"to separate from something"},
+    {term:"scrape", ipa:"/skreɪp/", ua:"зіскрібати", def:"to remove something by rubbing it with a sharp edge"},
+    {term:"adhere", ipa:"/ədˈhɪr/", ua:"прилипати", def:"to stick firmly to a surface"},
+    {term:"dissolve", ipa:"/dɪˈzɒlv/", ua:"розчиняти", def:"to make something disappear into a liquid"},
+    {term:"permission", ipa:"/pərˈmɪʃən/", ua:"дозвіл", def:"agreement that lets someone do something"},
+    {term:"prohibited", ipa:"/prəˈhɪbɪtɪd/", ua:"заборонено", def:"not allowed"},
+    {term:"moisturizer", ipa:"/ˈmɔɪstʃəraɪzər/", ua:"зволожувач", def:"a product that adds water or moisture to skin"},
+    {term:"checklist", ipa:"/ˈtʃɛklɪst/", ua:"контрольний список", def:"a list used to check things, one by one"}
+  ],
+  concepts:[
+    {term:"Eponychium", what:"the living skin at the base of the nail plate", where:"covers the matrix area, at the base of the nail plate", func:"often mistaken for the cuticle — but they are NOT the same tissue", living:"alive"},
+    {term:"Cuticle vs. Eponychium — how the cuticle is formed", what:"the cuticle comes from the underside of the eponychium", where:"—", func:"the cuticle completely detaches from the eponychium and becomes strongly attached to the new nail plate growth; it is pulled free to form a seal between the natural nail plate and the eponychium", living:null},
+    {term:"The Cuticle Checklist", what:"ask these 3 questions — if the answer is YES to ANY of them, the tissue is the cuticle", where:"—", func:"1) Does it adhere directly to the nail plate but come off easily with gentle scraping? 2) Is it very thin and colorless, but easy to see up close? 3) Is it nonliving and not directly attached to living skin?", living:"dead"},
+    {term:"The Eponychium Checklist", what:"ask these 3 questions — if the answer is YES to ANY of them, the tissue is the eponychium", where:"—", func:"1) Is it any part of the skin that grows up to the base of the nail plate? 2) Is it any part of the skin that covers the nail matrix and lunula? 3) If you cut deep enough into it, will it bleed?", living:"alive"},
+    {term:"⚖️ Legal / Scope-of-Practice Rule", what:"an important safety rule for every nail technician", where:"—", func:"Nail technicians are PERMITTED to gently push back the eponychium. Nail technicians are PROHIBITED from cutting or trimming ANY part of the eponychium, because it is living skin — even if it looks dry or hardened. Cutting the eponychium or any living skin is outside the scope of nail technology. A client CANNOT give a nail technician permission to cut living skin.", living:"alive"},
+    {term:"Cuticle Removers vs. Cuticle Moisturizers", what:"two very different types of product", where:"—", func:"Cuticle removers are named correctly: they carefully dissolve soft, dead cuticle tissue on the nail plate. But since the cuticle is dead skin, products marketed as 'cuticle moisturizers, softeners, or conditioners' cannot really be for the cuticle — they are actually designed for the eponychium, lateral sidewalls, and hyponychium.", living:null},
+    {term:"Hyponychium", what:"a slightly thickened layer of skin", where:"lies between the fingertip and the free edge of the nail plate", func:"forms a protective barrier that prevents microorganisms from invading and infecting the nail bed; if this area is damaged, the nail plate can separate from the nail bed, and infection becomes more likely — so this area should be treated with care", living:"alive"},
+    {term:"🔎 Try This — Activity", what:"a hands-on practice task", where:"—", func:"Use a small magnifying glass to examine the cuticles and eponychiums of at least 10 friends or classmates. Watch how the thin cuticle tissue attaches to and rides on top of the nail plate as it comes out from under the eponychium at the base of the nail plate. Then look closely at the eponychium. Decide: which one can be removed, and which one should never be cut?", living:null}
+  ],
+  confuse:"⚠️ MOST IMPORTANT RULE IN THIS UNIT: The cuticle is dead tissue — it may be gently removed with proper products/tools. The eponychium is living skin — it may ONLY be gently pushed back, NEVER cut or trimmed, even if the client asks for it. And do not mix up the hyponychium's job: it forms a protective barrier at the free edge, stopping microorganisms from invading the nail bed underneath.",
+  reading:[
+    "The <span class='gloss' data-ua='епоніхій'>eponychium</span> is the living skin at the base of the nail plate, covering the matrix area. The eponychium is often mistaken for the cuticle, but they are not the same. The cuticle is the dead tissue attached to the nail plate; the eponychium is the living tissue at the base of the nail plate.",
+    "The cuticle actually comes from the underside of the eponychium. At the base of the nail, the cuticle completely <span class='gloss' data-ua='відокремлюватися'>detaches</span> from the eponychium and becomes strongly attached to the new nail plate growth. It is pulled free to form a seal between the natural nail plate and the eponychium.",
+    "Here is an easy way to tell the difference. Ask: is the tissue <span class='gloss' data-ua='прилипати'>adhering</span> directly to the nail plate, but easily removed with gentle <span class='gloss' data-ua='зіскрібати'>scraping</span>? Is it very thin and colorless, but easy to see up close? Is it nonliving, and not directly attached to living skin? If you answer YES to any of these, the tissue is the <b>cuticle</b>. But if it is any part of skin that grows up to the base of the nail plate, or covers the matrix and lunula, or would bleed if you cut deep enough into it — that tissue is the <b>eponychium</b>.",
+    "This difference is not only about vocabulary — it is also about safety and the law. Nail technicians are permitted to gently push back the eponychium. But nail technicians are <span class='gloss' data-ua='заборонено'>prohibited</span> from cutting or trimming any part of the eponychium, because it is living skin — even if that skin looks dry or hard. Cutting the eponychium, or any living skin, is outside the scope of nail technology. A client cannot give <span class='gloss' data-ua='дозвіл'>permission</span> to a nail technician to cut living skin.",
+    "This confusion also affects nail products. Cuticle removers are named correctly — these products carefully <span class='gloss' data-ua='розчиняти'>dissolve</span> soft, dead cuticle tissue. But think about products marketed as cuticle <span class='gloss' data-ua='зволожувач'>moisturizers</span>, softeners, or conditioners. The cuticle is dead skin — so why would a product be designed to moisturize, soften, or condition it? These products are actually designed for the eponychium, the lateral sidewalls, and the hyponychium — not for the cuticle at all.",
+    "The <span class='gloss' data-ua='гіпоніхій'>hyponychium</span> is a slightly thickened layer of skin that lies between the fingertip and the free edge of the nail plate. It forms a protective barrier that prevents microorganisms from invading and infecting the nail bed. When this area is damaged, the nail plate can separate from the nail bed, and infection becomes more likely — so this area should always be treated with care.",
+    "🔎 <b>Try This — Activity:</b> Use a small magnifying glass to examine the cuticles and eponychiums of at least 10 friends or classmates. Watch how the thin cuticle tissue attaches to and rides on top of the nail plate as it comes out from under the eponychium at the base of the nail plate. Then examine the eponychium closely, and see how these two tissues differ in appearance. Decide: which one can be removed, and which one should never be cut?"
+  ],
+  comprehension:{
+    tf:[
+      {s:"The cuticle and the eponychium are the same tissue.", a:false, exp:"They are NOT the same. The cuticle is dead tissue; the eponychium is living skin."},
+      {s:"A nail technician may cut the eponychium if the client asks for it.", a:false, exp:"No — cutting the eponychium is prohibited, even with client permission. It is living skin."},
+      {s:"The hyponychium helps protect the nail bed from infection.", a:true, exp:"Correct — the hyponychium forms a protective barrier against invading microorganisms at the free edge."}
+    ],
+    mcq:[
+      {q:"According to the checklist, which question helps identify the eponychium?", opts:["Does it come off easily with gentle scraping?","Is it very thin and colorless?","If you cut deep enough, will it bleed?","Is it nonliving?"], c:2, exp:"A 'yes' to 'will it bleed if cut deep enough' points to living tissue — the eponychium."}
+    ],
+    gap:[
+      {before:"Nail technicians are ", answer:"permitted", after:" to gently push back the eponychium."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What is the eponychium?", opts:["Dead skin on top of the nail plate","Living skin at the base of the nail plate, covering the matrix area","A nail polish ingredient","The free edge of the nail"], c:1, exp:"The eponychium is living skin at the base of the nail plate, covering the matrix area."},
+    {type:'tf', s:"The cuticle comes from the underside of the eponychium.", a:true, exp:"Correct — the cuticle originates from the underside of the eponychium before detaching and attaching to new nail growth."},
+    {type:'mcq', q:"May a nail technician cut the eponychium, even with the client's permission?", opts:["Yes, if the client asks", "No — cutting living skin is never allowed, even with permission","Yes, but only a small part","Only on toenails"], c:1, exp:"A client cannot give permission to cut living skin. This is outside the scope of nail technology, always."},
+    {type:'gap', before:"Nail technicians are ", answer:"prohibited", after:" from cutting or trimming any part of the eponychium."},
+    {type:'mcq', q:"According to the checklist, which sign points to the CUTICLE, not the eponychium?", opts:["It would bleed if cut deeply","It covers the matrix and lunula","It is nonliving and not attached to living skin","It grows up to the base of the nail plate"], c:2, exp:"Nonliving tissue not attached to living skin is a clear sign of the cuticle."},
+    {type:'tf', s:"Cuticle removers are named correctly, because they are designed for dead tissue.", a:true, exp:"Correct — cuticle removers properly dissolve soft, dead cuticle tissue."},
+    {type:'mcq', q:"Why is it confusing to call a product a 'cuticle moisturizer'?", opts:["Because moisturizers do not exist","Because the cuticle is dead skin, and dead skin cannot really be moisturized — those products are for living tissue like the eponychium","Because moisturizers are too expensive","Because only toenails need moisturizer"], c:1, exp:"Since the cuticle is dead tissue, a true 'moisturizer' effect is only meaningful for living tissue — the eponychium, sidewalls, or hyponychium."},
+    {type:'gap', before:"To ", answer:"detach", after:" means to separate from something."},
+    {type:'tf', s:"The hyponychium lies between the fingertip and the free edge of the nail plate.", a:true, exp:"Correct — that is exactly where the hyponychium is located."},
+    {type:'mcq', q:"What can a nail technician legally do to the eponychium?", opts:["Trim it with scissors","Cut it with a small blade","Gently push it back","Remove it completely"], c:2, exp:"Gently pushing back the eponychium is permitted. Cutting or trimming it is never allowed."},
+    {type:'mcq', q:"Which word means 'to stick firmly to a surface'?", opts:["adhere","dissolve","detach","scrape"], c:0, exp:"'Adhere' means to stick firmly — this is what the cuticle does to the nail plate."},
+    {type:'tf', s:"A client's request or permission makes it legal for a technician to cut living skin.", a:false, exp:"No — a client cannot give permission for this. It remains prohibited regardless of what the client asks."},
+    {type:'gap', before:"A ", answer:"checklist", after:" is a list used to check things, one by one."},
+    {type:'mcq', q:"What does the hyponychium do?", opts:["It creates new nail plate cells","It forms a protective barrier that stops microorganisms from invading the nail bed","It gives the nail its pink color","It removes dead skin from the nail plate"], c:1, exp:"The hyponychium forms a protective barrier under the free edge, stopping microorganisms from invading and infecting the nail bed."},
+    {type:'tf', s:"The eponychium and cuticle checklists both use the same three questions.", a:false, exp:"No — each structure has its own separate checklist of three different questions."}
+  ]
+},
+
+/* ---------------- UNIT 5 (was Unit 3) ---------------- */
+{
+  id:5,
+  title:"Specialized Ligaments &amp; Nail Folds",
+  kicker:"Unit 5 · Anchoring and framing the nail",
+  chapterNote:"Two more structures complete our picture of the nail unit's protection: the ligaments that anchor everything to the bone, and the folds of skin that frame the nail plate.",
+  vocab:[
+    {term:"ligament", ipa:"/ˈlɪɡəmənt/", ua:"зв'язка", def:"a tough band of tissue that connects bones or holds an organ in place"},
+    {term:"fibrous", ipa:"/ˈfaɪbrəs/", ua:"волокнистий", def:"made of thin, thread-like fibers"},
+    {term:"band", ipa:"/bænd/", ua:"смуга, пучок", def:"a long, thin strip or piece of something"},
+    {term:"connect", ipa:"/kəˈnɛkt/", ua:"з'єднувати", def:"to join two things together"},
+    {term:"fold", ipa:"/foʊld/", ua:"складка", def:"a part of skin that bends over another part"},
+    {term:"groove", ipa:"/ɡruːv/", ua:"борозенка", def:"a long, narrow line or furrow"},
+    {term:"surround", ipa:"/səˈraʊnd/", ua:"оточувати", def:"to be all around something"},
+    {term:"sidewall", ipa:"/ˈsaɪdwɔːl/", ua:"бічна стінка", def:"the fold of skin at the side of the nail"},
+    {term:"lateral", ipa:"/ˈlætərəl/", ua:"бічний", def:"relating to the side of something"}
+  ],
+  concepts:[
+    {term:"Specialized Ligaments", what:"tough bands of fibrous tissue", where:"at the base of the matrix and around the edges of the nail bed", func:"attach the nail bed and the matrix bed to the underlying bone", living:null},
+    {term:"Nail Folds", what:"folds of normal skin", where:"surrounding the nail plate", func:"form the nail groove on each side of the nail; the sidewall (lateral nail fold) is the skin fold that overlaps the side of the nail", living:null}
+  ],
+  confuse:"⚠️ Quick review from Unit 4: the <b>eponychium</b> (living, at the base) and the <b>hyponychium</b> (living, at the free edge) both protect the nail — but the <b>ligaments</b> in this Unit do a different job entirely: they anchor the nail bed and matrix to the bone underneath.",
+  reading:[
+    "A <span class='gloss' data-ua='зв'язка'>ligament</span> is a tough <span class='gloss' data-ua='волокнистий'>fibrous</span> <span class='gloss' data-ua='смуга, пучок'>band</span> of tissue that connects bones or holds an organ in place. Specialized ligaments <span class='gloss' data-ua='з'єднувати'>connect</span> the nail bed and the matrix bed to the bone underneath. They are found at the base of the matrix and around the edges of the nail bed.",
+    "The nail <span class='gloss' data-ua='складка'>folds</span> are folds of normal skin that <span class='gloss' data-ua='оточувати'>surround</span> the nail plate. These folds form the nail <span class='gloss' data-ua='борозенка'>groove</span> on each side of the nail. The <span class='gloss' data-ua='бічна стінка'>sidewall</span>, also called the <span class='gloss' data-ua='бічний'>lateral</span> nail fold, is the fold of skin that lies over the side of the nail."
+  ],
+  comprehension:{
+    tf:[
+      {s:"Ligaments attach the nail bed and matrix to the bone.", a:true, exp:"Correct — this is exactly the job of the specialized ligaments."},
+      {s:"Nail folds are made of a special, non-skin tissue.", a:false, exp:"Nail folds are simply folds of normal skin — not a special separate tissue."}
+    ],
+    mcq:[
+      {q:"What do specialized ligaments do?", opts:["They make new nail cells","They attach the nail bed and matrix to the bone","They polish the nail","They seal the cuticle"], c:1, exp:"Ligaments are tough tissue bands that anchor the nail bed and matrix bed to the underlying bone."}
+    ],
+    gap:[
+      {before:"The sidewall is also called the ", answer:"lateral", after:" nail fold."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What is a ligament?", opts:["Living skin at the base of the nail","A tough, fibrous band of tissue that connects bones or holds an organ in place","A type of nail polish","Dead tissue attached to the nail plate"], c:1, exp:"A ligament is a tough, fibrous band of tissue with a connecting or anchoring job."},
+    {type:'tf', s:"Specialized ligaments attach the nail plate directly to the bone.", a:false, exp:"Ligaments attach the nail BED and MATRIX to the bone — not the nail plate directly."},
+    {type:'mcq', q:"Where are specialized ligaments located?", opts:["On the free edge","At the base of the matrix and around the edges of the nail bed","Inside the lunula","On top of the cuticle"], c:1, exp:"They are found at the base of the matrix and around the edges of the nail bed, anchoring these structures to bone."},
+    {type:'gap', before:"A ", answer:"ligament", after:" is a tough band of fibrous tissue."},
+    {type:'tf', s:"The nail folds are made of normal skin.", a:true, exp:"Correct — nail folds are simply folds of normal skin surrounding the nail plate."},
+    {type:'mcq', q:"What is the sidewall also called?", opts:["The eponychium","The lateral nail fold","The free edge","The matrix bed"], c:1, exp:"The sidewall = the lateral nail fold, the skin fold that overlaps the side of the nail."},
+    {type:'gap', before:"The nail folds form the nail ", answer:"groove", after:" on each side of the nail."},
+    {type:'mcq', q:"What do nail folds surround?", opts:["The bone","The nail plate","The lunula only","The matrix only"], c:1, exp:"Nail folds are folds of skin that surround the nail plate on each side."},
+    {type:'tf', s:"Nail folds surround the nail plate.", a:true, exp:"Correct — nail folds are folds of skin that surround, or go around, the nail plate."},
+    {type:'gap', before:"To ", answer:"surround", after:" means to be all around something."},
+    {type:'mcq', q:"Which word means 'a long, narrow line or furrow'?", opts:["fold","groove","band","ligament"], c:1, exp:"'Groove' describes a long, narrow line — like the nail groove formed by the nail folds."},
+    {type:'mcq', q:"'Fibrous' means:", opts:["made of thin, thread-like fibers","completely smooth","full of water","very thin and colorless"], c:0, exp:"'Fibrous' describes something made of thin, thread-like fibers — like the tissue in a ligament."},
+    {type:'tf', s:"'Lateral' means relating to the side of something.", a:true, exp:"Correct — 'lateral' means relating to the side, as in the lateral nail fold (sidewall)."},
+    {type:'mcq', q:"Which structure protects the nail bed at the base, and which protects it at the free edge? (Review Unit 4)", opts:["Ligament and nail fold","Eponychium and hyponychium","Matrix and cuticle","Lunula and sidewall"], c:1, exp:"Review from Unit 4: the eponychium protects at the base; the hyponychium protects at the free edge."},
+    {type:'gap', before:"To ", answer:"connect", after:" means to join two things together."}
+  ]
+}
+,
+
+/* ---------------- UNIT 6 (was Unit 4) ---------------- */
+{
+  id:6,
+  title:"How Nails Grow",
+  kicker:"Unit 6 · Speed, shape, and what affects growth",
+  chapterNote:"Nails do not all grow at the same speed. In this Unit we learn what affects nail growth, and how the matrix decides the shape of the nail.",
+  vocab:[
+    {term:"growth", ipa:"/ɡroʊθ/", ua:"ріст", def:"the process of getting bigger"},
+    {term:"affect", ipa:"/əˈfɛkt/", ua:"впливати", def:"to cause a change in something"},
+    {term:"nutrition", ipa:"/njuːˈtrɪʃən/", ua:"харчування", def:"the food a person eats"},
+    {term:"rate", ipa:"/reɪt/", ua:"темп, швидкість", def:"how fast something happens"},
+    {term:"curvature", ipa:"/ˈkɜːrvətʃər/", ua:"вигин, кривизна", def:"how curved (bent) something is"},
+    {term:"thickness", ipa:"/ˈθɪknəs/", ua:"товщина", def:"how thick something is"},
+    {term:"average", ipa:"/ˈævərɪdʒ/", ua:"середній", def:"the usual or typical amount"},
+    {term:"thumbnail", ipa:"/ˈθʌmneɪl/", ua:"ніготь великого пальця", def:"the nail on the thumb"},
+    {term:"hormone", ipa:"/ˈhɔːrmoʊn/", ua:"гормон", def:"a chemical made by the body that controls how it works"},
+    {term:"myth", ipa:"/mɪθ/", ua:"міф", def:"a false idea that many people believe"}
+  ],
+  concepts:[
+    {term:"What affects nail growth?", what:"three main factors", where:"—", func:"nutrition, exercise, and a person's general health all affect how the nail plate grows", living:null},
+    {term:"Matrix shape → Nail shape", what:"the matrix decides the nail's shape", where:"—", func:"the length, width, and curvature of the matrix decide the thickness, width, and curvature of the plate; a longer matrix makes a thicker plate; a highly curved matrix makes a highly curved free edge; nothing (not even vitamins) can make the nail plate grow thicker unless the matrix itself grows larger", living:null},
+    {term:"Average growth rate", what:"about 1/10\" to 1/8\" (2.5–3 mm) per month", where:"—", func:"faster in summer than winter; children's nails grow faster; older people's nails grow more slowly; the middle finger grows fastest; the thumbnail grows slowest; growth speeds up in the last trimester of pregnancy because of hormones, then returns to normal after birth", living:null}
+  ],
+  confuse:"⚠️ Common myth: taking prenatal vitamins makes nails grow faster. Fact: nail growth speeds up in late pregnancy because of hormones — it happens with or without the vitamins.",
+  reading:[
+    "Nail <span class='gloss' data-ua='ріст'>growth</span> is <span class='gloss' data-ua='впливати'>affected</span> by three things: <span class='gloss' data-ua='харчування'>nutrition</span>, exercise, and a person's general health.",
+    "The shape of the nail plate depends on the shape of the matrix. The length, width, and <span class='gloss' data-ua='вигин, кривизна'>curvature</span> of the matrix decide the <span class='gloss' data-ua='товщина'>thickness</span>, width, and curvature of the nail plate. For example, a longer matrix makes a thicker nail plate. A highly curved matrix makes a highly curved free edge. Nothing can make the nail plate grow thicker — this would need the matrix itself to grow larger.",
+    "The <span class='gloss' data-ua='середній'>average</span> rate of nail plate growth in a normal adult is about 1/10 inch to 1/8 inch (2.5 to 3 mm) per month. Nails grow faster in summer than in winter. Children's nails grow more quickly, while older people's nails grow more slowly. The nail of the middle finger grows the fastest; the <span class='gloss' data-ua='ніготь великого пальця'>thumbnail</span> grows the slowest.",
+    "Nail growth speeds up a lot during the last part of pregnancy, because of <span class='gloss' data-ua='гормон'>hormone</span> changes in the body. After the baby is born, growth slows back down to normal, as hormone levels return to normal too. It is a <span class='gloss' data-ua='міф'>myth</span> that prenatal vitamins cause faster nail growth — the growth rate speeds up whether or not a woman takes these vitamins.",
+    "Toenail plates grow more slowly than fingernail plates, but they are thicker, because the toenail matrix is longer than the fingernail matrix."
+  ],
+  comprehension:{
+    mcq:[
+      {q:"Which finger's nail grows fastest?", opts:["The thumb","The middle finger","The little finger","All fingers grow at the same speed"], c:1, exp:"The middle finger nail grows the fastest; the thumbnail grows the slowest."},
+      {q:"Why do toenails grow more slowly but look thicker?", opts:["Because they get less nutrition","Because the toenail matrix is longer than the fingernail matrix","Because they are older","Because of nail polish"], c:1, exp:"A longer matrix produces a thicker nail plate — this is why toenails are thicker."}
+    ],
+    tf:[
+      {s:"Prenatal vitamins are the real cause of faster nail growth in pregnancy.", a:false, exp:"This is a myth. Hormone changes cause the faster growth, whether or not vitamins are taken."}
+    ],
+    gap:[
+      {before:"A ", answer:"longer", after:" matrix produces a thicker nail plate."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"Which three things affect nail growth?", opts:["Color, size, and shape","Nutrition, exercise, and general health","Polish, filing, and cutting","Age, gender, and height"], c:1, exp:"The text names nutrition, exercise, and a person's general health as the factors affecting growth."},
+    {type:'tf', s:"A longer matrix produces a thinner nail plate.", a:false, exp:"A longer matrix produces a THICKER nail plate, not thinner."},
+    {type:'mcq', q:"What is the average nail growth rate for an adult?", opts:["1/10\" to 1/8\" per month","1 inch per month","1/10\" to 1/8\" per week","5 mm per day"], c:0, exp:"The average rate is about 1/10\" to 1/8\" (2.5–3 mm) per month."},
+    {type:'gap', before:"Nails grow faster in ", answer:"summer", after:" than in winter."},
+    {type:'tf', s:"Children's nails grow more slowly than adult nails.", a:false, exp:"Children's nails grow more quickly, not more slowly."},
+    {type:'mcq', q:"Which nail grows the slowest?", opts:["The middle finger","The thumbnail","The little finger","The ring finger"], c:1, exp:"The thumbnail grows the slowest of all the fingernails."},
+    {type:'mcq', q:"What can make a nail plate grow thicker?", opts:["Vitamins","Filing","The matrix growing larger","Cutting the cuticle"], c:2, exp:"Only a larger matrix can make the nail plate thicker — nothing else changes plate thickness."},
+    {type:'tf', s:"Nail growth increases in the last trimester of pregnancy.", a:true, exp:"Correct — hormone changes in late pregnancy speed up nail growth."},
+    {type:'gap', before:"It is a ", answer:"myth", after:" that prenatal vitamins cause faster nail growth."},
+    {type:'mcq', q:"Why are toenail plates thicker than fingernail plates?", opts:["Toenails get more sunlight","The toenail matrix is longer","Toenails have more layers of polish","Toenails grow faster"], c:1, exp:"A longer toenail matrix makes a thicker toenail plate, even though toenails grow more slowly."},
+    {type:'tf', s:"A highly curved matrix creates a highly curved free edge.", a:true, exp:"Correct — the curvature of the matrix decides the curvature of the free edge."},
+    {type:'mcq', q:"'Rate' means:", opts:["a type of tissue","how fast something happens","a hormone","a nail shape"], c:1, exp:"'Rate' describes speed — how fast something happens, like nail growth rate."},
+    {type:'gap', before:"After the baby is born, the nail growth rate returns to ", answer:"normal", after:"."},
+    {type:'mcq', q:"What decides the width of the nail plate?", opts:["The width of the matrix","The type of nail polish","The person's age only","The eponychium"], c:0, exp:"The width of the matrix decides the width of the nail plate."},
+    {type:'tf', s:"Exercise can affect nail growth.", a:true, exp:"Correct — the text lists exercise as one factor, along with nutrition and general health."}
+  ]
+},
+
+/* ---------------- UNIT 7 (was Unit 5) ---------------- */
+{
+  id:7,
+  title:"Nail Shapes",
+  kicker:"Unit 7 · Vocabulary for natural nail shapes",
+  chapterNote:"Figure 8-2 in your textbook shows many natural nail shapes. In this short Unit, we learn the words for these shapes.",
+  vocab:[
+    {term:"shape", ipa:"/ʃeɪp/", ua:"форма", def:"the outer form of something"},
+    {term:"flat", ipa:"/flæt/", ua:"плоский", def:"level, not curved"},
+    {term:"arched", ipa:"/ɑːrtʃt/", ua:"вигнутий дугою", def:"curved like an arch"},
+    {term:"concave", ipa:"/kɒnˈkeɪv/", ua:"угнутий", def:"curved inward, like the inside of a bowl"},
+    {term:"convex", ipa:"/kɒnˈvɛks/", ua:"опуклий", def:"curved outward"},
+    {term:"square", ipa:"/skwɛr/", ua:"квадратний", def:"having four equal, straight sides and corners"},
+    {term:"narrow", ipa:"/ˈnæroʊ/", ua:"вузький", def:"not wide"},
+    {term:"trapezoid", ipa:"/ˈtræpəzɔɪd/", ua:"трапецієподібний", def:"a shape with four sides, and two of them are parallel"},
+    {term:"tubular", ipa:"/ˈtjuːbjələr/", ua:"трубчастий", def:"shaped like a tube"},
+    {term:"roofed", ipa:"/ruːft/", ua:"дахоподібний", def:"shaped like the top of a roof"}
+  ],
+  concepts:[
+    {term:"Nail shapes (Figure 8-2)", what:"different natural forms of the nail plate", where:"shown in the textbook figure: Acorn, flat, arched, Roofed, Trapezoid, Olive, Date, Concave, Convex, Square, Angular, Narrow, Fan, Circumflex, Arched, Tubular", func:"a healthy nail plate can grow in many different shapes — remember from Unit 6: this depends on the shape of the matrix", living:null}
+  ],
+  confuse:"⚠️ Do not confuse <b>concave</b> (curved inward, like a bowl) with <b>convex</b> (curved outward, like a dome).",
+  reading:[
+    "Look again at Unit 6: the <span class='gloss' data-ua='форма'>shape</span> of a nail plate depends on the shape of the matrix. Because matrices are different from person to person, the textbook shows many natural nail shapes.",
+    "Some nails are <span class='gloss' data-ua='плоский'>flat</span>, and some are <span class='gloss' data-ua='вигнутий дугою'>arched</span>. A <span class='gloss' data-ua='угнутий'>concave</span> nail curves inward, like the inside of a bowl. A <span class='gloss' data-ua='опуклий'>convex</span> nail curves outward, like the top of a dome.",
+    "Other shapes have special names, based on their look: Acorn, Roofed, <span class='gloss' data-ua='трапецієподібний'>Trapezoid</span>, Olive, Date, <span class='gloss' data-ua='квадратний'>Square</span>, Angular, <span class='gloss' data-ua='вузький'>Narrow</span>, Fan, Circumflex, and <span class='gloss' data-ua='трубчастий'>Tubular</span>. All of these are natural, healthy nail shapes — they are simply different because every matrix is a little different."
+  ],
+  comprehension:{
+    mcq:[
+      {q:"What decides the natural shape of a nail plate?", opts:["The nail polish used","The shape of the matrix","The age of the client only","The cuticle"], c:1, exp:"As learned in Unit 6, the matrix's shape decides the nail plate's shape."}
+    ],
+    tf:[
+      {s:"Concave and convex mean the same thing.", a:false, exp:"They are opposite: concave curves inward; convex curves outward."}
+    ],
+    gap:[
+      {before:"A nail that curves outward, like a dome, is called ", answer:"convex", after:"."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What does 'concave' mean?", opts:["Curved outward","Curved inward, like a bowl","Perfectly flat","Very narrow"], c:1, exp:"Concave means curved inward, like the inside of a bowl."},
+    {type:'mcq', q:"What does 'convex' mean?", opts:["Curved inward","Curved outward","Square-shaped","Tube-shaped"], c:1, exp:"Convex means curved outward, like a dome."},
+    {type:'tf', s:"All the nail shapes in Figure 8-2 are unhealthy nails.", a:false, exp:"No — these are all natural, healthy nail shapes. They are simply different because matrices differ from person to person."},
+    {type:'gap', before:"A nail with four equal, straight sides is called ", answer:"square", after:"."},
+    {type:'mcq', q:"What causes different natural nail shapes?", opts:["Different types of nail polish","Different matrix shapes","Different ages only","Different cuticles"], c:1, exp:"The matrix's own shape (length, width, curvature) causes the different natural nail shapes."},
+    {type:'tf', s:"'Narrow' means not wide.", a:true, exp:"Correct — narrow describes something that is not wide."},
+    {type:'mcq', q:"A shape like a tube is called:", opts:["Tubular","Trapezoid","Roofed","Concave"], c:0, exp:"'Tubular' means shaped like a tube."},
+    {type:'gap', before:"A ", answer:"trapezoid", after:" is a shape with four sides, where two of them are parallel."},
+    {type:'tf', s:"A flat nail and an arched nail look the same.", a:false, exp:"They are different: flat is level, while arched is curved like an arch."},
+    {type:'mcq', q:"Which word describes 'shaped like the top of a roof'?", opts:["Roofed","Square","Fan","Tubular"], c:0, exp:"'Roofed' describes a shape like the top of a roof."}
+  ]
+},
+
+/* ---------------- UNIT 8 (was Unit 6) ---------------- */
+{
+  id:8,
+  title:"Nail Plate Malformation",
+  kicker:"Unit 8 · When growth changes",
+  chapterNote:"Injury, disease, or aging can change how the nail plate grows. In this Unit we learn about nail plate replacement, grooves, and a common myth about 'ridges'.",
+  vocab:[
+    {term:"disease", ipa:"/dɪˈziːz/", ua:"хвороба", def:"an illness"},
+    {term:"injury", ipa:"/ˈɪndʒəri/", ua:"травма", def:"damage to the body"},
+    {term:"replace", ipa:"/rɪˈpleɪs/", ua:"замінювати", def:"to put a new thing instead of an old one"},
+    {term:"shed", ipa:"/ʃɛd/", ua:"скидати, линяти", def:"to lose or drop something naturally"},
+    {term:"push", ipa:"/pʊʃ/", ua:"штовхати", def:"to move something forward with force"},
+    {term:"permanently", ipa:"/ˈpɜːrmənəntli/", ua:"постійно", def:"in a way that lasts forever, without changing"},
+    {term:"weaken", ipa:"/ˈwiːkən/", ua:"послаблювати", def:"to make something less strong"},
+    {term:"ridge", ipa:"/rɪdʒ/", ua:"ребро, гребінець", def:"a raised (higher) line on a surface"},
+    {term:"file (v.)", ipa:"/faɪl/", ua:"підпилювати", def:"to smooth a surface with a special tool"},
+    {term:"age (v.)", ipa:"/eɪdʒ/", ua:"старіти", def:"to get older"}
+  ],
+  concepts:[
+    {term:"Nail plate replacement", what:"the time for a whole new nail plate to grow", where:"—", func:"a fingernail plate takes about 4 to 6 months for complete replacement; a toenail plate takes 9 months to 1 year, because toenails grow more slowly", living:null},
+    {term:"How new cells are made", what:"a constant process", where:"in the matrix", func:"nail plates are not shed like hair; the matrix constantly creates new cells; each new cell pushes the older cells forward, toward the free edge; more new cells = faster growth; fewer new cells = the nail plate becomes thinner and can develop a narrow groove", living:null},
+    {term:"Aging and grooves", what:"a natural change with age", where:"in the nail plate", func:"as a person ages, parts of the matrix permanently slow down production, so the nail plate develops narrow grooves running down its length; this is a normal part of aging", living:null}
+  ],
+  confuse:"⚠️ Important professional fact: people often call these age-related lines 'ridges', but the matrix does NOT grow ridges — it only grows grooves. Filing away these lines only thins and weakens the whole nail plate. Never tell a client that filing removes ridges — explain the real cause.",
+  reading:[
+    "If <span class='gloss' data-ua='хвороба'>disease</span>, <span class='gloss' data-ua='травма'>injury</span>, or infection happens in the matrix, the shape or thickness of the nail plate can change. The nail plate will keep growing as long as the matrix is healthy and not damaged.",
+    "A whole nail plate does not <span class='gloss' data-ua='скидати, линяти'>shed</span> at once, the way hair sometimes does. Complete <span class='gloss' data-ua='замінювати'>replacement</span> of a fingernail plate normally takes about 4 to 6 months. A toenail plate takes 9 months to 1 year, because toenail growth is slower.",
+    "The matrix is always making new nail cells. Every time a new cell is created, it <span class='gloss' data-ua='штовхати'>pushes</span> the older cells forward and away from the matrix, toward the free edge. If cells are made faster, the nail plate grows faster. If cells are made more slowly, the nail plate grows more slowly too. If a small part of the matrix stops making new cells, that part of the nail plate becomes thinner and can develop a narrow groove.",
+    "As a person <span class='gloss' data-ua='старіти'>ages</span>, parts of the matrix <span class='gloss' data-ua='постійно'>permanently</span> slow down. This makes the nail plate grow a series of narrow grooves down its length. This is a normal part of aging. People often call these lines '<span class='gloss' data-ua='ребро, гребінець'>ridges</span>', but this is not correct: the matrix does not grow ridges — only grooves. <span class='gloss' data-ua='підпилювати'>Filing</span> away these lines only thins and <span class='gloss' data-ua='послаблювати'>weakens</span> the whole nail plate."
+  ],
+  comprehension:{
+    tf:[
+      {s:"A fingernail plate is completely replaced in about 4 to 6 months.", a:true, exp:"Correct — this is the normal time for fingernail plate replacement."},
+      {s:"The matrix grows real ridges as a person gets older.", a:false, exp:"This is a myth. The matrix only grows grooves, never ridges."}
+    ],
+    mcq:[
+      {q:"What happens if you file away age-related lines on the nail plate?", opts:["The nail becomes stronger","The nail plate only becomes thinner and weaker","The lines disappear forever with no side effect","New matrix cells are created"], c:1, exp:"Filing does not remove the real cause (grooves from the matrix) — it only thins and weakens the whole nail plate."}
+    ],
+    gap:[
+      {before:"Nail plates are not ", answer:"shed", after:" automatically, as hair is."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"How long does complete fingernail plate replacement usually take?", opts:["1 to 2 months","4 to 6 months","9 months to 1 year","2 years"], c:1, exp:"Fingernail plates normally take 4 to 6 months for complete replacement."},
+    {type:'mcq', q:"How long does complete toenail plate replacement take?", opts:["4 to 6 months","1 to 2 months","9 months to 1 year","3 to 4 months"], c:2, exp:"Toenails grow more slowly, so replacement takes 9 months to 1 year."},
+    {type:'tf', s:"New matrix cells push older cells toward the free edge.", a:true, exp:"Correct — this pushing process is exactly how the nail plate slowly moves forward."},
+    {type:'gap', before:"If cells are produced faster, the nail plate will grow ", answer:"faster", after:"."},
+    {type:'mcq', q:"What happens if a small part of the matrix stops making new cells?", opts:["The nail plate becomes thicker there","That part of the plate becomes thinner and can develop a groove","The whole nail falls off","Nothing changes"], c:1, exp:"A slowdown in cell production in one part of the matrix leads to a thinner area and a narrow groove."},
+    {type:'tf', s:"The lines that appear with age are correctly called 'ridges'.", a:false, exp:"This is a common but incorrect name. They are grooves — the matrix does not grow ridges."},
+    {type:'mcq', q:"Why do narrow grooves develop as a person ages?", opts:["Because of nail polish","Because parts of the matrix permanently slow down production","Because of filing","Because the cuticle gets thicker"], c:1, exp:"Aging causes parts of the matrix to permanently slow down, creating a series of narrow grooves."},
+    {type:'gap', before:"Filing away age-related lines only ", answer:"thins", after:" and weakens the whole nail plate."},
+    {type:'tf', s:"Injury or disease in the matrix can change the shape or thickness of the nail plate.", a:true, exp:"Correct — problems in the matrix directly affect how the nail plate grows and looks."},
+    {type:'mcq', q:"'Shed' means:", opts:["to create something new","to lose or drop something naturally","to make something stronger","to seal something"], c:1, exp:"'Shed' means to lose or drop naturally — like hair does, but nail plates do NOT shed this way."},
+    {type:'mcq', q:"Which best explains the aging grooves myth?", opts:["They are called ridges and can be safely filed away completely","They are called ridges by many people, but the matrix actually makes grooves, not ridges","They only appear on toenails","They disappear naturally with age"], c:1, exp:"The professional fact: people call them ridges, but the matrix truly makes grooves. Filing weakens the nail."},
+    {type:'tf', s:"A healthy, undamaged matrix will keep the nail plate growing.", a:true, exp:"Correct — as long as the matrix stays healthy, the nail plate continues to grow."},
+    {type:'gap', before:"An ", answer:"injury", after:" is damage to the body."},
+    {type:'mcq', q:"Which word means 'to make something less strong'?", opts:["weaken","replace","push","age"], c:0, exp:"'Weaken' means to make something less strong — this is what filing does to the nail plate."},
+    {type:'tf', s:"Complete nail plate replacement happens all at once, like shedding hair.", a:false, exp:"No — nail plates grow and are replaced gradually, cell by cell, not shed all at once like hair."}
+  ]
+},
+
+/* ---------------- UNIT 9 (was Unit 7) ---------------- */
+{
+  id:9,
+  title:"Know Your Nails — Chapter Wrap-Up",
+  kicker:"Unit 9 · Bringing it all together",
+  chapterNote:"This final Unit reviews the professional idea behind everything you learned, and mixes vocabulary and concepts from Units 1–8.",
+  vocab:[
+    {term:"professional", ipa:"/prəˈfɛʃənəl/", ua:"професіонал; професійний", def:"a trained, skilled worker"},
+    {term:"creative", ipa:"/kriˈeɪtɪv/", ua:"творчий", def:"able to make new and interesting things"},
+    {term:"opportunity", ipa:"/ˌɒpərˈtjuːnəti/", ua:"можливість", def:"a chance to do something"},
+    {term:"awareness", ipa:"/əˈwɛrnəs/", ua:"обізнаність", def:"knowing about something"},
+    {term:"license", ipa:"/ˈlaɪsəns/", ua:"ліцензія", def:"official permission to do a job"},
+    {term:"sign", ipa:"/saɪn/", ua:"ознака", def:"something that shows a fact"},
+    {term:"canvas", ipa:"/ˈkænvəs/", ua:"полотно (перен.)", def:"a surface used for creating art"},
+    {term:"artistry", ipa:"/ˈɑːrtɪstri/", ua:"майстерність", def:"skill in creating something beautiful"}
+  ],
+  concepts:[
+    {term:"Professional responsibility", what:"the idea that creativity must be grounded in real knowledge", where:"—", func:"a nail professional must fully understand the structure and physiology of the nails and surrounding skin before being creative; a licensed nail professional may only work on healthy nails and skin, with no visible signs of disease or infection", living:null}
+  ],
+  confuse:"⚠️ Remember from Unit 4: only the dead cuticle can be trimmed — the living eponychium must never be cut, and a client cannot give permission for this. And from Unit 8: file grooves gently — filing does not remove them, it only weakens the plate.",
+  reading:[
+    "Many nail <span class='gloss' data-ua='професіонал; професійний'>professionals</span> are interested in nails because of the <span class='gloss' data-ua='творчий'>creative</span> <span class='gloss' data-ua='можливість'>opportunities</span> they offer. But like every part of cosmetology, this creativity must be based on full <span class='gloss' data-ua='обізнаність'>awareness</span> of the structure and physiology of the nails and the tissue around them.",
+    "Working on good, strong, healthy nails can be a real pleasure. As a <span class='gloss' data-ua='ліцензія'>licensed</span> nail professional, you may only work on healthy nails and skin, with no visible <span class='gloss' data-ua='ознака'>signs</span> of disease or infection. Working on healthy nails is the <span class='gloss' data-ua='полотно (перен.)'>canvas</span> on which your <span class='gloss' data-ua='майстерність'>artistry</span> can grow."
+  ],
+  comprehension:{
+    mcq:[
+      {q:"Why must nail professionals understand nail structure well?", opts:["Because it is required for the exam only","Because their creativity must be based on real knowledge of the nail unit","Because clients ask about it","Because it makes the salon look nicer"], c:1, exp:"Real creativity as a professional must be grounded in a full understanding of nail structure and physiology."}
+    ],
+    tf:[
+      {s:"A licensed nail professional may work on any nails, even with signs of infection.", a:false, exp:"A professional may only work on healthy nails and skin with no visible signs of disease or infection."}
+    ],
+    gap:[
+      {before:"Working on healthy nails is the ", answer:"canvas", after:" on which your artistry can grow."}
+    ]
+  },
+  test:[
+    {type:'mcq', q:"What is the scientific name for the natural nail?", opts:["Onyx","Keratin","Matrix","Eponychium"], c:0, exp:"Review from Unit 1: 'onyx' is the scientific name for the natural nail."},
+    {type:'mcq', q:"What structure is dead, hardened keratin?", opts:["Nail bed","Nail plate","Matrix","Eponychium"], c:1, exp:"Review from Unit 2: the nail plate is hardened keratin sitting on the living nail bed."},
+    {type:'mcq', q:"What is living tissue that makes new nail cells?", opts:["Cuticle","Matrix","Free edge","Ridge"], c:1, exp:"Review from Unit 3: the matrix is living tissue that creates new nail plate cells."},
+    {type:'tf', s:"The eponychium is dead tissue and can be safely cut.", a:false, exp:"Review from Unit 4: the eponychium is living skin and must never be cut, even with client permission. Only the dead cuticle can be gently treated."},
+    {type:'mcq', q:"May a client give a nail technician permission to cut living skin?", opts:["Yes, always","No — this is never allowed, no matter what the client says","Only for toenails","Only if written down"], c:1, exp:"Review from Unit 4: cutting living skin, such as the eponychium, is prohibited — a client cannot give permission for it."},
+    {type:'mcq', q:"Which finger's nail grows fastest?", opts:["Thumb","Middle finger","Little finger","Ring finger"], c:1, exp:"Review from Unit 6: the middle finger nail grows the fastest of all."},
+    {type:'gap', before:"A ", answer:"concave", after:" nail curves inward, like a bowl."},
+    {type:'tf', s:"The matrix grows ridges as a person ages.", a:false, exp:"Review from Unit 8: this is a myth. The matrix grows grooves, not ridges. Filing only weakens the plate."},
+    {type:'mcq', q:"What connects the nail bed and matrix to the underlying bone?", opts:["The cuticle","Ligaments","The lunula","The free edge"], c:1, exp:"Review from Unit 5: specialized ligaments anchor the nail bed and matrix to the bone."},
+    {type:'mcq', q:"May a licensed nail professional work on infected nails?", opts:["Yes, always","No — only on healthy nails and skin with no visible signs of disease","Yes, but only with gloves","Only if the client agrees"], c:1, exp:"A licensed professional may only work on healthy nails and skin, with no visible signs of disease or infection."},
+    {type:'tf', s:"The lunula is the visible part of the matrix.", a:true, exp:"Review from Unit 3: correct — the lunula is simply the visible half-moon part of the matrix."},
+    {type:'gap', before:"A fingernail plate takes about 4 to ", answer:"6", after:" months for complete replacement."},
+    {type:'mcq', q:"What decides the natural shape of a nail plate?", opts:["Nail polish","The shape of the matrix","The client's age only","The nail file used"], c:1, exp:"Review from Units 6–7: the shape of the matrix decides the natural shape of the nail plate."},
+    {type:'tf', s:"Toenail plates are thinner than fingernail plates.", a:false, exp:"Review from Unit 6: toenail plates are actually thicker, because the toenail matrix is longer."},
+    {type:'mcq', q:"What is the cuticle's main job?", opts:["To create new nail cells","To seal the space between the nail plate and living skin above it","To decide the nail's color","To connect bone to the nail bed"], c:1, exp:"Review from Unit 3: the cuticle seals that space, protecting against foreign material and germs."},
+    {type:'mcq', q:"Where is the hyponychium located?", opts:["At the base of the nail plate, over the matrix","Between the fingertip and the free edge of the nail plate","On the side of the finger only","Inside the bone"], c:1, exp:"Review from Unit 4: the hyponychium lies between the fingertip and the free edge of the nail plate."},
+    {type:'mcq', q:"According to this chapter, why should creativity in nail care always come with strong knowledge?", opts:["Because clients prefer trained professionals","Because working on nails safely and well requires real understanding of nail structure and health","Because it is a legal requirement only","Because it is faster"], c:1, exp:"The chapter's key message: creativity must be grounded in full awareness of nail structure and physiology, for the client's safety and health."},
+    {type:'tf', s:"The nail bed has many nerves and blood vessels.", a:true, exp:"Review from Unit 2: correct — the nail bed is living skin, richly supplied with nerves and blood vessels."},
+    {type:'gap', before:"An ", answer:"opportunity", after:" is a chance to do something."},
+    {type:'tf', s:"A healthy nail plate normally has 15–25% water content.", a:true, exp:"Review from Unit 1: correct — even a nail that feels dry and hard has 15–25% water content."}
+  ]
+}
+];
+
+/* =========================================================================
+   RENDER ENGINE
+   ========================================================================= */
+let currentUnit = 0;
+const completed = new Array(UNITS.length).fill(false);
+
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.92;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+function el(tag, cls, html){
+  const d = document.createElement(tag);
+  if(cls) d.className = cls;
+  if(html !== undefined) d.innerHTML = html;
+  return d;
+}
+
+function buildRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML='';
+  UNITS.forEach((u,i)=>{
+    const node = el('button','railnode'+(i===currentUnit?' active':'')+(completed[i]?' done':''));
+    node.innerHTML = `<div class="dot">${completed[i]?'✓':i+1}</div><div class="lbl">U${i+1}</div>`;
+    node.addEventListener('click', ()=>goToUnit(i));
+    rail.appendChild(node);
+    if(i < UNITS.length-1){
+      const track = el('div','railtrack'+(completed[i]?' filled':''));
+      rail.appendChild(track);
+    }
+  });
+}
+
+function goToUnit(i){
+  currentUnit = i;
+  document.querySelectorAll('.section').forEach((s,idx)=>{ s.classList.toggle('active', idx===i); });
+  document.getElementById('progressText').textContent = `Unit ${i+1} of ${UNITS.length}`;
+  buildRail();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function markComplete(i){
+  completed[i]=true;
+  buildRail();
+}
+
+/* -- flashcards -- */
+function buildFlashcards(vocab){
+  const grid = el('div','flashgrid');
+  vocab.forEach(v=>{
+    const card = el('div','flashcard');
+    card.tabIndex = 0;
+    card.innerHTML = `
+      <div class="inner">
+        <div class="face front">
+          <div class="row"><span class="term">${v.term}</span></div>
+          <div class="ipa">${v.ipa}</div>
+          <button class="speakbtn" type="button">🔊</button>
+        </div>
+        <div class="face back">
+          <div class="ua">${v.ua}</div>
+          <div class="def">${v.def}</div>
+        </div>
+      </div>`;
+    card.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('speakbtn')) return;
+      card.classList.toggle('flipped');
+    });
+    card.querySelector('.speakbtn').addEventListener('click',(e)=>{ e.stopPropagation(); speak(v.term); });
+    grid.appendChild(card);
+  });
+  return grid;
+}
+
+/* -- matching (word <-> definition) -- */
+function buildMatching(vocab){
+  const wrap = el('div');
+  const grid = el('div','matchgrid');
+  const wordCol = el('div','matchcol');
+  const defCol = el('div','matchcol');
+  const pairs = vocab.map((v,i)=>({id:i, word:v.term, def:v.def}));
+  const shuffledDefs = [...pairs].sort(()=>Math.random()-0.5);
+  let selectedWord = null, selectedDef = null, matchedCount = 0;
+  const fb = el('div','feedback');
+
+  pairs.forEach(p=>{
+    const item = el('div','mitem', p.word);
+    item.dataset.id = p.id;
+    item.addEventListener('click', ()=>{
+      if(item.classList.contains('matched')) return;
+      wordCol.querySelectorAll('.mitem').forEach(x=>x.classList.remove('selected'));
+      item.classList.add('selected');
+      selectedWord = item;
+      tryMatch();
+    });
+    wordCol.appendChild(item);
+  });
+  shuffledDefs.forEach(p=>{
+    const item = el('div','mitem', p.def);
+    item.dataset.id = p.id;
+    item.addEventListener('click', ()=>{
+      if(item.classList.contains('matched')) return;
+      defCol.querySelectorAll('.mitem').forEach(x=>x.classList.remove('selected'));
+      item.classList.add('selected');
+      selectedDef = item;
+      tryMatch();
+    });
+    defCol.appendChild(item);
+  });
+
+  function tryMatch(){
+    if(!selectedWord || !selectedDef) return;
+    if(selectedWord.dataset.id === selectedDef.dataset.id){
+      selectedWord.classList.add('matched'); selectedWord.classList.remove('selected');
+      selectedDef.classList.add('matched'); selectedDef.classList.remove('selected');
+      matchedCount++;
+      fb.className='feedback correct';
+      fb.textContent = matchedCount===pairs.length ? '✓ Excellent! You matched all the words.' : '✓ Correct match!';
+      if(matchedCount===pairs.length){ fb.style.display='block'; }
+    } else {
+      fb.className='feedback wrong';
+      fb.textContent = '✗ Not a match. Look at the definition again and try another word.';
+      setTimeout(()=>{ selectedWord && selectedWord.classList.remove('selected'); selectedDef && selectedDef.classList.remove('selected'); },500);
+    }
+    selectedWord=null; selectedDef=null;
+  }
+
+  grid.appendChild(wordCol); grid.appendChild(defCol);
+  wrap.appendChild(grid); wrap.appendChild(fb);
+  return wrap;
+}
+
+/* -- concept cards -- */
+function buildConcepts(concepts){
+  const wrap = el('div');
+  concepts.forEach(c=>{
+    const card = el('div','conceptcard');
+    let html = `<h4>${c.term}</h4>`;
+    html += `<div class="kv"><b>What</b><span>${c.what}</span></div>`;
+    if(c.where && c.where!=='—') html += `<div class="kv"><b>Where</b><span>${c.where}</span></div>`;
+    html += `<div class="kv"><b>Function</b><span>${c.func}</span></div>`;
+    if(c.living==='alive') html += `<span class="livingtag alive">🌿 Living tissue</span>`;
+    if(c.living==='dead') html += `<span class="livingtag dead">💀 Dead tissue</span>`;
+    card.innerHTML = html;
+    wrap.appendChild(card);
+  });
+  return wrap;
+}
+
+/* -- reading with gloss tooltips -- */
+function buildReading(paras){
+  const wrap = el('div');
+  paras.forEach(p=>{
+    wrap.appendChild(el('div','readingpara', p));
+  });
+  return wrap;
+}
+function attachGlossListeners(container){
+  container.querySelectorAll('.gloss').forEach(g=>{
+    g.addEventListener('click',(e)=>{
+      const pop = document.getElementById('pronpop');
+      pop.textContent = g.dataset.ua;
+      const r = g.getBoundingClientRect();
+      pop.style.left = r.left+'px';
+      pop.style.top = (r.top - 34)+'px';
+      pop.style.display='block';
+      speak(g.textContent);
+      setTimeout(()=>{ pop.style.display='none'; }, 1600);
+    });
+  });
+}
+
+/* -- question builders (used for comprehension AND unit test) -- */
+function buildMCQ(qObj, idx, prefix){
+  const box = el('div','exq');
+  box.appendChild(el('div','qtext', qObj.q));
+  const list = el('div','optlist');
+  const fb = el('div','feedback');
+  qObj.opts.forEach((o,oi)=>{
+    const lab = el('label');
+    lab.innerHTML = `<input type="radio" name="${prefix}-${idx}"> ${o}`;
+    lab.querySelector('input').addEventListener('change', ()=>{
+      list.querySelectorAll('label').forEach(l=>l.classList.remove('correctpick','wrongpick'));
+      if(oi===qObj.c){
+        lab.classList.add('correctpick');
+        fb.className='feedback correct';
+        fb.textContent = '✓ Correct! ' + qObj.exp;
+        box.dataset.result='correct';
+      } else {
+        lab.classList.add('wrongpick');
+        list.children[qObj.c].classList.add('correctpick');
+        fb.className='feedback wrong';
+        fb.textContent = '✗ Not quite. ' + qObj.exp;
+        box.dataset.result='wrong';
+      }
+    });
+    list.appendChild(lab);
+  });
+  box.appendChild(list); box.appendChild(fb);
+  return box;
+}
+function buildTF(qObj, idx, prefix){
+  const box = el('div','exq');
+  box.appendChild(el('div','qtext', qObj.s));
+  const row = el('div','tfrow');
+  const tBtn = el('button','tfbtn','True');
+  const fBtn = el('button','tfbtn','False');
+  const fb = el('div','feedback');
+  function pick(val, btn, other){
+    other.classList.remove('selF','selT','true'); btn.classList.add(val?'selT':'selF'); btn.classList.add('true');
+    if(val===qObj.a){ fb.className='feedback correct'; fb.textContent='✓ Correct! '+qObj.exp; box.dataset.result='correct'; }
+    else{ fb.className='feedback wrong'; fb.textContent='✗ Not quite. '+qObj.exp; box.dataset.result='wrong'; }
+  }
+  tBtn.addEventListener('click',()=>pick(true,tBtn,fBtn));
+  fBtn.addEventListener('click',()=>pick(false,fBtn,tBtn));
+  row.appendChild(tBtn); row.appendChild(fBtn);
+  box.appendChild(row); box.appendChild(fb);
+  return box;
+}
+function buildGap(qObj, idx, prefix){
+  const box = el('div','exq');
+  const line = el('div','qtext');
+  line.appendChild(document.createTextNode(qObj.before));
+  const input = el('input'); input.type='text'; input.className='gapinput'; input.dataset.answer=qObj.answer;
+  line.appendChild(input);
+  line.appendChild(document.createTextNode(qObj.after));
+  box.appendChild(line);
+  const check = el('button','tinybtn','Check');
+  const fb = el('div','feedback');
+  check.addEventListener('click',()=>{
+    const ok = input.value.trim().toLowerCase() === qObj.answer.toLowerCase();
+    input.classList.remove('correct','wrong'); input.classList.add(ok?'correct':'wrong');
+    fb.className = ok?'feedback correct':'feedback wrong';
+    fb.textContent = ok ? ('✓ Correct! The answer is "'+qObj.answer+'".') : ('✗ Not quite. The correct answer is "'+qObj.answer+'". '+(qObj.exp||''));
+    box.dataset.result = ok ? 'correct':'wrong';
+  });
+  box.appendChild(check); box.appendChild(fb);
+  return box;
+}
+
+function buildComprehension(comp){
+  const wrap = el('div');
+  let idx=0;
+  if(comp.mcq) comp.mcq.forEach(q=>wrap.appendChild(buildMCQ(q, idx++, 'comp')));
+  if(comp.tf) comp.tf.forEach(q=>wrap.appendChild(buildTF(q, idx++, 'comp')));
+  if(comp.gap) comp.gap.forEach(q=>wrap.appendChild(buildGap(q, idx++, 'comp')));
+  return wrap;
+}
+
+function buildTest(testArr, unitIndex){
+  const wrap = el('div');
+  const qWrap = el('div');
+  testArr.forEach((q,i)=>{
+    let box;
+    if(q.type==='mcq') box = buildMCQ(q, i, 'test'+unitIndex);
+    if(q.type==='tf') box = buildTF(q, i, 'test'+unitIndex);
+    if(q.type==='gap') box = buildGap(q, i, 'test'+unitIndex);
+    qWrap.appendChild(box);
+  });
+  wrap.appendChild(qWrap);
+
+  const checkBtn = el('button','btn primary','Check My Test');
+  const scoreBox = el('div','scorebox');
+  checkBtn.addEventListener('click',()=>{
+    let correct=0;
+    qWrap.querySelectorAll('.exq').forEach(box=>{
+      if(box.dataset.result === 'correct') correct++;
+    });
+    scoreBox.className='scorebox show';
+    scoreBox.innerHTML = `<div class="big">${correct} / ${testArr.length}</div><div>correct answers</div>`;
+    if(correct/testArr.length >= 0.7){
+      markComplete(unitIndex);
+      scoreBox.innerHTML += `<div style="margin-top:8px;color:var(--sage-deep);font-weight:700;">🎉 Great work! Unit ${unitIndex+1} complete.</div>`;
+    } else {
+      scoreBox.innerHTML += `<div style="margin-top:8px;color:var(--magenta-deep);font-weight:700;">Review the Reading and vocabulary, then try again.</div>`;
+    }
+    scoreBox.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+  wrap.appendChild(checkBtn);
+  wrap.appendChild(scoreBox);
+  return wrap;
+}
+
+/* -- build a whole unit section -- */
+function buildUnitSection(u, i){
+  const sec = el('section','section');
+  sec.id = 'unit-'+i;
+
+  const chap = el('div','chapterhead');
+  chap.innerHTML = `<div class="kicker">${u.kicker}</div><h3>${u.chapterNote}</h3>`;
+  sec.appendChild(chap);
+
+  // 1. Vocabulary
+  sec.appendChild(el('h2','sectitle','<span class="num">1</span> Vocabulary'));
+  sec.appendChild(el('p','secsub','Tap each card to flip it. Tap 🔊 to hear the word.'));
+  sec.appendChild(buildFlashcards(u.vocab));
+
+  // 2. Matching practice
+  sec.appendChild(el('h2','sectitle','<span class="num">2</span> Word ↔ Definition Matching'));
+  sec.appendChild(el('p','secsub','Click a word, then click its matching definition.'));
+  const matchCard = el('div','card');
+  matchCard.appendChild(buildMatching(u.vocab));
+  sec.appendChild(matchCard);
+
+  // 3. Professional concepts
+  sec.appendChild(el('h2','sectitle','<span class="num">3</span> Professional Concepts'));
+  sec.appendChild(el('p','secsub','TERM → WHAT IS IT? → WHERE IS IT? → WHAT DOES IT DO?'));
+  const conceptCard = el('div','card');
+  conceptCard.appendChild(buildConcepts(u.concepts));
+  if(u.confuse){
+    conceptCard.appendChild(el('div','confusebox', u.confuse));
+  }
+  sec.appendChild(conceptCard);
+
+  // 4. Reading
+  sec.appendChild(el('h2','sectitle','<span class="num">4</span> Reading'));
+  sec.appendChild(el('p','secsub','Click any highlighted word to hear it and see the Ukrainian translation.'));
+  const readCard = el('div');
+  readCard.appendChild(buildReading(u.reading));
+  sec.appendChild(readCard);
+
+  // 5. Understanding & practice
+  sec.appendChild(el('h2','sectitle','<span class="num">5</span> Understanding &amp; Practice'));
+  sec.appendChild(el('p','secsub','Check what you understood from the reading.'));
+  const compCard = el('div','card');
+  compCard.appendChild(buildComprehension(u.comprehension));
+  sec.appendChild(compCard);
+
+  // 6. Unit test
+  sec.appendChild(el('h2','sectitle','<span class="num">6</span> Unit Test'));
+  sec.appendChild(el('p','secsub','Answer every question, then press "Check My Test" to see your score.'));
+  const testCard = el('div','card');
+  testCard.appendChild(buildTest(u.test, i));
+  sec.appendChild(testCard);
+
+  // nav
+  const nav = el('div','navbar');
+  const prevBtn = el('button','btn ghost', '← Previous Unit');
+  const nextBtn = el('button','btn ghost', 'Next Unit →');
+  if(i===0) prevBtn.textContent = '← Back to Warm-Up';
+  if(i===UNITS.length-1) nextBtn.textContent = 'Finish Chapter ✓';
+  prevBtn.addEventListener('click',()=>{
+    if(i>0){ goToUnit(i-1); }
+    else {
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById('warmupSection').classList.add('active');
+      document.getElementById('progressText').textContent = 'Warm-Up';
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+  nextBtn.addEventListener('click',()=>{ if(i<UNITS.length-1) goToUnit(i+1); });
+  nav.appendChild(prevBtn);
+  nav.appendChild(el('div',null,`Unit ${i+1} of ${UNITS.length}`));
+  nav.appendChild(nextBtn);
+  sec.appendChild(nav);
+
+  attachGlossListeners(readCard);
+
+  return sec;
+}
+
+/* -- warm-up: mindset words -- */
+const MINDSET_WORDS = [
+  {term:"focus", ipa:"/ˈfoʊkəs/", ua:"зосередженість", def:"to give all your attention to one thing"},
+  {term:"practice", ipa:"/ˈpræktɪs/", ua:"практика", def:"doing something many times to get better at it"},
+  {term:"patience", ipa:"/ˈpeɪʃəns/", ua:"терпіння", def:"staying calm while you wait or learn slowly"},
+  {term:"confidence", ipa:"/ˈkɒnfɪdəns/", ua:"впевненість", def:"believing that you can do something well"},
+  {term:"mistake", ipa:"/mɪˈsteɪk/", ua:"помилка", def:"something you do wrong — and can learn from"},
+  {term:"progress", ipa:"/ˈprɒɡrɛs/", ua:"прогрес", def:"moving forward and getting better, step by step"}
+];
+function initMindsetWords(){
+  const grid = document.getElementById('mindsetGrid');
+  if(!grid) return;
+  grid.appendChild(buildFlashcards(MINDSET_WORDS));
+}
+
+/* -- warm-up: breathing exercise -- */
+function initBreathing(){
+  const btn = document.getElementById('breathBtn');
+  const circle = document.getElementById('breathCircle');
+  const label = document.getElementById('breathLabel');
+  if(!btn) return;
+  let running = false;
+  btn.addEventListener('click', ()=>{
+    if(running) return;
+    running = true;
+    btn.disabled = true;
+    const phases = [
+      {name:'Breathe in…', cls:'inhale'},
+      {name:'Hold…', cls:'hold'},
+      {name:'Breathe out…', cls:'exhale'}
+    ];
+    let round = 0, phaseIdx = 0;
+    const totalRounds = 3;
+    function step(){
+      if(round >= totalRounds){
+        label.textContent = 'Well done! 🌿';
+        circle.className = 'breathcircle';
+        btn.disabled = false;
+        running = false;
+        return;
+      }
+      const p = phases[phaseIdx];
+      circle.className = 'breathcircle ' + p.cls;
+      label.textContent = p.name;
+      phaseIdx++;
+      if(phaseIdx >= phases.length){ phaseIdx = 0; round++; }
+      setTimeout(step, 4000);
+    }
+    step();
+  });
+}
+
+function initWarmupNav(){
+  const startBtn = document.getElementById('startLessonBtn');
+  if(!startBtn) return;
+  startBtn.addEventListener('click', ()=>{
+    document.getElementById('warmupSection').classList.remove('active');
+    goToUnit(0);
+  });
+}
+
+/* -- init -- */
+function init(){
+  const root = document.getElementById('unitsRoot');
+  UNITS.forEach((u,i)=>{
+    root.appendChild(buildUnitSection(u,i));
+  });
+  buildRail();
+  document.getElementById('progressText').textContent = `Warm-Up`;
+  initMindsetWords();
+  initBreathing();
+  initWarmupNav();
+}
+init();
+</script>
+</body>
+</html>
