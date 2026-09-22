@@ -331,6 +331,13 @@ const TOPICS = [
     description: "Learn the parts of the natural nail, how nails grow, and how to talk about them like a professional — in simple English.",
     units: 9,
     href: "nail_structure_growth.html"
+  },
+  {
+    title: "Hello! 🐝 English Pronunciation &amp; Memory Workout",
+    tag: "Extra Practice",
+    description: "A focused coaching session for pronunciation and memory — practice sounds, rhythm, and recall outside the main nail-tech units.",
+    meta: "🎧 Pronunciation Session",
+    href: "Hello_Pronunciation_Memory_Workout__2_.html"
   }
   // 👉 To add a new lesson later, copy the block above and change the values.
   // Example:
@@ -350,11 +357,12 @@ function renderLessons(){
     const card = document.createElement('a');
     card.className = 'card topiccard';
     card.href = t.href;
+    const metaLine = t.meta ? t.meta : `📘 ${t.units} Units`;
     card.innerHTML = `
       <span class="topictag">${t.tag}</span>
       <h3>${t.title}</h3>
       <div class="desc">${t.description}</div>
-      <div class="meta">📘 ${t.units} Units</div>
+      <div class="meta">${metaLine}</div>
       <div class="rowend">
         <span class="btn small ghost" style="pointer-events:none;">Open Lesson →</span>
       </div>
